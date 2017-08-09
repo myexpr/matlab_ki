@@ -3,6 +3,7 @@ package _con.text.hotel.engine;
 import static java.util.Arrays.*;
 
 import _con.text.hotel.constraint.business.BusinessConstraints;
+import _con.text.hotel.constraint.business.OverWeekday;
 import _con.text.hotel.constraint.simple.Eq;
 import _con.text.hotel.constraint.simple.GteLte;
 import _con.text.hotel.constraint.business.NumberOfAdults;
@@ -16,7 +17,8 @@ public enum SearchType {
   BUSINESS(asList(
       new NumberOfAdults(new Eq(1)),
       new NumberOfRooms(new Eq(1)),
-      new NumberOfNights(new GteLte(1, 3))));
+      new NumberOfNights(new GteLte(1, 3)),
+      new OverWeekday()));
 
   private final List<BusinessConstraints> constraints;
     SearchType(List<BusinessConstraints> constraints) {

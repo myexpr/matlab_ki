@@ -1,21 +1,26 @@
 package _con.text.hotel.model;
 
+import static java.time.Duration.*;
 import static java.time.temporal.ChronoUnit.DAYS;
+import static java.util.Arrays.*;
 
-import java.util.Date;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
-import java.util.function.BinaryOperator;
 
 public class SearchRequest {
 
   String destination;
-  Date fromDate;
-  Date toDate;
+  LocalDate fromDate;
+  LocalDate toDate;
   List<Room> rooms;
   Integer adults;
   Integer children;
 
-  public SearchRequest(String destination, Date fromDate, Date toDate,
+  public SearchRequest(String destination, LocalDate fromDate, LocalDate toDate,
       List<Room> rooms) {
     super();
     this.destination = destination;
@@ -24,8 +29,13 @@ public class SearchRequest {
     this.rooms = rooms;
   }
 
+  public SearchRequest(String destination, LocalDate fromDate, LocalDate toDate,
+      Room room) {
+    this(destination, fromDate, toDate, asList(room));
+  }
+
   public Integer numberOfNights() {
-    Long between = DAYS.between(fromDate.toInstant(), toDate.toInstant());
+    Long between = fromDate.until(toDate, DAYS);
     return between.intValue();
   }
 
@@ -44,4 +54,26 @@ public class SearchRequest {
   public Integer numberOfAdults() {
     return rooms.stream().mapToInt(Room::numberOfAdults).sum();
   }
+
+  public LocalDate getFromDate() {
+    return fromDate;
+  }
+
+  public LocalDate getToDate() {
+    return toDate;
+  }
+
+  @Override
+  public String toString() {
+    return "SearchRequest{" +
+        "destination='" + destination + '\'' +
+        ", fromDate=" + fromDate +
+        ", toDate=" + toDate +
+        ", rooms=" + rooms +
+        ", adults=" + adults +
+        ", children=" + children +
+        '}';
+  }
+
+
 }
