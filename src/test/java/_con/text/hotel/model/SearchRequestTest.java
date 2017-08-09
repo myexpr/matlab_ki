@@ -9,7 +9,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Date;
 import org.junit.Test;
 
@@ -26,14 +25,14 @@ public class SearchRequestTest {
 
   @Test
   public void requestIsFor2Days() {
-    SimpleSearchRequest request = new SimpleSearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
+    SearchRequest request = new SearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
         asList(A_ROOM_FOR_ONE_ADULT));
-    assertEquals(2, request.numberOfNights());
+    assertEquals(new Integer(2), request.numberOfNights());
   }
 
   @Test
   public void requestIsFor1Person() {
-    SimpleSearchRequest request = new SimpleSearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
+    SearchRequest request = new SearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
         asList(A_ROOM_FOR_ONE_ADULT));
     assertTrue(request.singleOccupancy());
     assertFalse(request.partyWithChildren());
@@ -41,12 +40,12 @@ public class SearchRequestTest {
 
   @Test
   public void requestIsForAFamily() {
-    SimpleSearchRequest request = new SimpleSearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
+    SearchRequest request = new SearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
         asList(A_ROOM_FOR_SMALL_FAMILY));
     assertFalse(request.singleOccupancy());
     assertTrue(request.partyWithChildren());
 
-    SimpleSearchRequest anotherRequest = new SimpleSearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
+    SearchRequest anotherRequest = new SearchRequest(A_DESTINATION, FROM_DATE, FROM_PLUS_2_DAYS,
         asList(AN_ADULT_ACCOMPANYING_CHILDREN));
     assertFalse(anotherRequest.singleOccupancy());
     assertTrue(anotherRequest.partyWithChildren());

@@ -9,6 +9,13 @@ public class Room {
     this.adults = adults;
     this.children = children;
   }
+  public Integer numberOfAdults() {
+    return adults;
+  }
+
+  public Integer numberOfChildren() {
+    return children;
+  }
 
   public boolean singleOccupancy() {
     return adults == 1 && children == 0;

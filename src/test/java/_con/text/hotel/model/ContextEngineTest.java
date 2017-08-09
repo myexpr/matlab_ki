@@ -1,12 +1,14 @@
 package _con.text.hotel.model;
 
-import static _con.text.hotel.model.SearchType.BUSINESS;
+import static _con.text.hotel.engine.SearchType.BUSINESS;
 import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.Arrays.asList;
 import static java.util.Date.from;
 import static org.junit.Assert.assertEquals;
 
+import _con.text.hotel.engine.ContextEngine;
+import _con.text.hotel.engine.SearchType;
 import java.time.Instant;
 import java.util.Date;
 import org.junit.Test;
@@ -25,7 +27,7 @@ public class ContextEngineTest {
   @Test
   public void evaluatedAsBusinessTrip() {
     ContextEngine engine = new ContextEngine();
-    SearchRequest request = new SimpleSearchRequest(A_DESTINATION, TOMORROW, DAY_AFTER_TOMORROW,
+    SearchRequest request = new SearchRequest(A_DESTINATION, TOMORROW, DAY_AFTER_TOMORROW,
         asList(A_ROOM_FOR_ONE_ADULT));
     SearchType evaluatedType = engine.evaluate(request);
     assertEquals(BUSINESS, evaluatedType);
