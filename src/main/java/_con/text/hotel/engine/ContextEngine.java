@@ -1,6 +1,6 @@
 package _con.text.hotel.engine;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 import _con.text.hotel.model.SearchRequest;
 import java.util.List;

@@ -1,6 +1,7 @@
 package _con.text.hotel.model.constraint.business;
 
-import static java.time.DayOfWeek.*;
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.MONDAY;
 import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import static org.junit.Assert.assertFalse;
@@ -10,10 +11,7 @@ import _con.text.hotel.constraint.business.OverWeekday;
 import _con.text.hotel.model.Room;
 import _con.text.hotel.model.SearchRequest;
 import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.Date;
 import org.junit.Test;
 
 /**

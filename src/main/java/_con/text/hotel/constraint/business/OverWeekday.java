@@ -1,16 +1,13 @@
 package _con.text.hotel.constraint.business;
 
-import static java.time.DayOfWeek.*;
-import static java.util.Calendar.DAY_OF_WEEK;
-import static java.util.Calendar.getInstance;
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.of;
 
 import _con.text.hotel.model.SearchRequest;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 public class OverWeekday implements BusinessConstraints {
 

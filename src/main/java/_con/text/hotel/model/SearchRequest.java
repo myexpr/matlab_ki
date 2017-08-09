@@ -1,14 +1,9 @@
 package _con.text.hotel.model;
 
-import static java.time.Duration.*;
 import static java.time.temporal.ChronoUnit.DAYS;
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 public class SearchRequest {
