@@ -17,6 +17,7 @@ public class SimpleSearchRequest implements SearchRequest {
 
   public SimpleSearchRequest(String destination, Date fromDate, Date toDate,
       List<Room> rooms) {
+    super();
     this.destination = destination;
     this.fromDate = fromDate;
     this.toDate = toDate;
@@ -25,6 +26,10 @@ public class SimpleSearchRequest implements SearchRequest {
 
   public long numberOfNights() {
     return DAYS.between(fromDate.toInstant(), toDate.toInstant());
+  }
+
+  public long numberOfRooms() {
+    return rooms.size();
   }
 
   public boolean singleOccupancy() {

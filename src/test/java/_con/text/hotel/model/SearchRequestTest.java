@@ -20,9 +20,9 @@ public class SearchRequestTest {
   private static final Room A_ROOM_FOR_SMALL_FAMILY = new Room(2, 2);
   private static final Room AN_ADULT_ACCOMPANYING_CHILDREN = new Room(2, 2);
 
-  Instant TOMORROW = now().plus(1, DAYS).truncatedTo(DAYS);
-  Date FROM_DATE = from(TOMORROW);
-  Date FROM_PLUS_2_DAYS = from(TOMORROW.plus(2, DAYS));
+  private static final Instant TOMORROW = now().plus(1, DAYS).truncatedTo(DAYS);
+  private static final Date FROM_DATE = from(TOMORROW);
+  private static final Date FROM_PLUS_2_DAYS = from(TOMORROW.plus(2, DAYS));
 
   @Test
   public void requestIsFor2Days() {
@@ -50,8 +50,7 @@ public class SearchRequestTest {
         asList(AN_ADULT_ACCOMPANYING_CHILDREN));
     assertFalse(anotherRequest.singleOccupancy());
     assertTrue(anotherRequest.partyWithChildren());
-
   }
-  
+
 }
 
