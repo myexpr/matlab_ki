@@ -1,4 +1,4 @@
-package _con.text.hotel.constraint;
+package _con.text.hotel.constraint.arithmetic;
 
 /**
  * Created by araman on 09/08/2017.

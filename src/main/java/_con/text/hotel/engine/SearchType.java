@@ -1,29 +1,35 @@
 package _con.text.hotel.engine;
 
-import _con.text.hotel.constraint.Constraint;
-import _con.text.hotel.constraint.Eq;
-import _con.text.hotel.constraint.GteLte;
+import static java.util.Arrays.*;
+
+import _con.text.hotel.constraint.business.BusinessConstraints;
+import _con.text.hotel.constraint.arithmetic.Eq;
+import _con.text.hotel.constraint.arithmetic.GteLte;
+import _con.text.hotel.constraint.business.NumberOfAdults;
+import _con.text.hotel.constraint.business.NumberOfNights;
+import _con.text.hotel.constraint.business.NumberOfRooms;
 import _con.text.hotel.model.SearchRequest;
+import java.util.List;
 
 public enum SearchType {
 
-  BUSINESS(new Eq(1), new Eq(1), new GteLte(1, 3));
+  BUSINESS(asList(
+      new NumberOfAdults(new Eq(1)),
+      new NumberOfRooms(new Eq(1)),
+      new NumberOfNights(new GteLte(1, 3))));
 
-  private final Constraint numberOfRooms;
-  private final Constraint numberOfAdults;
-  private final Constraint numberOfNights;
+  private final List<BusinessConstraints> constraints;
 
-  SearchType(Constraint numberOfRooms, Constraint numberOfAdults,
-      Constraint numberOfNights) {
-    this.numberOfRooms = numberOfRooms;
-    this.numberOfAdults = numberOfAdults;
-    this.numberOfNights = numberOfNights;
+  SearchType(List<BusinessConstraints> constraints) {
+    this.constraints = constraints;
   }
 
   public boolean evaluate(SearchRequest request) {
-    return numberOfRooms.evaluate(request.numberOfRooms()) &&
-        numberOfAdults.evaluate(request.numberOfAdults()) &&
-        numberOfNights.evaluate(request.numberOfNights());
+    long countOfPassConstraints = constraints.stream().filter(c -> {
+      return c.evaluate(request);
+    }).count();
+
+    return constraints.size() == countOfPassConstraints;
   }
 
 }
