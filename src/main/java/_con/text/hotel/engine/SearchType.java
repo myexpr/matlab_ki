@@ -3,8 +3,8 @@ package _con.text.hotel.engine;
 import static java.util.Arrays.*;
 
 import _con.text.hotel.constraint.business.BusinessConstraints;
-import _con.text.hotel.constraint.arithmetic.Eq;
-import _con.text.hotel.constraint.arithmetic.GteLte;
+import _con.text.hotel.constraint.simple.Eq;
+import _con.text.hotel.constraint.simple.GteLte;
 import _con.text.hotel.constraint.business.NumberOfAdults;
 import _con.text.hotel.constraint.business.NumberOfNights;
 import _con.text.hotel.constraint.business.NumberOfRooms;
@@ -19,10 +19,9 @@ public enum SearchType {
       new NumberOfNights(new GteLte(1, 3))));
 
   private final List<BusinessConstraints> constraints;
-
-  SearchType(List<BusinessConstraints> constraints) {
-    this.constraints = constraints;
-  }
+    SearchType(List<BusinessConstraints> constraints) {
+      this.constraints = constraints;
+    }
 
   public boolean evaluate(SearchRequest request) {
     long countOfPassConstraints = constraints.stream().filter(c -> {

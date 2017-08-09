@@ -1,4 +1,4 @@
-package _con.text.hotel.constraint.arithmetic;
+package _con.text.hotel.constraint.simple;
 
 public interface Constraint {
 

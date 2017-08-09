@@ -3,6 +3,7 @@ package _con.text.hotel.model;
 import static _con.text.hotel.engine.SearchType.BUSINESS;
 import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.DAYS;
+import static java.util.Arrays.*;
 import static java.util.Arrays.asList;
 import static java.util.Date.from;
 import static org.junit.Assert.assertEquals;
@@ -10,7 +11,9 @@ import static org.junit.Assert.assertEquals;
 import _con.text.hotel.engine.ContextEngine;
 import _con.text.hotel.engine.SearchType;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import org.junit.Test;
 
 public class ContextEngineTest {
@@ -29,8 +32,8 @@ public class ContextEngineTest {
     ContextEngine engine = new ContextEngine();
     SearchRequest request = new SearchRequest(A_DESTINATION, TOMORROW, DAY_AFTER_TOMORROW,
         asList(A_ROOM_FOR_ONE_ADULT));
-    SearchType evaluatedType = engine.evaluate(request);
-    assertEquals(BUSINESS, evaluatedType);
+    List<SearchType> evaluatedType = engine.evaluate(request);
+    assertEquals(asList(BUSINESS), evaluatedType);
   }
 
 

@@ -1,6 +1,6 @@
 package _con.text.hotel.constraint.business;
 
-import _con.text.hotel.constraint.arithmetic.Constraint;
+import _con.text.hotel.constraint.simple.Constraint;
 import _con.text.hotel.model.SearchRequest;
 
 public class NumberOfAdults implements BusinessConstraints {

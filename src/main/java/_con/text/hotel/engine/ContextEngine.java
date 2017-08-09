@@ -1,16 +1,22 @@
 package _con.text.hotel.engine;
 
-import static _con.text.hotel.engine.SearchType.BUSINESS;
+import static java.util.Arrays.*;
 
 import _con.text.hotel.model.SearchRequest;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ContextEngine {
 
-  public SearchType evaluate(SearchRequest request) {
-    if (BUSINESS.evaluate(request)) {
-      return BUSINESS;
-    }
-    return null;
+  public List<SearchType> evaluate(SearchRequest request) {
+    List<SearchType> matchedTypes = null;
+    matchedTypes = asList(SearchType.values())
+        .stream()
+        .filter(t -> {
+          return t.evaluate(request);
+        })
+        .collect(Collectors.toList());
+    return matchedTypes;
   }
 
 
