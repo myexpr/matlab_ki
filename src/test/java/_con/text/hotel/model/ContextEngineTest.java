@@ -54,5 +54,4 @@ public class ContextEngineTest {
     return LocalDate.now().with(firstDayOfNextMonth()).with(firstInMonth(dayOfWeek));
   }
 
-
 }

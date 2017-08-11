@@ -50,6 +50,10 @@ public class SearchRequest {
     return rooms.stream().mapToInt(Room::numberOfAdults).sum();
   }
 
+  public Integer numberOfChildren() {
+    return rooms.stream().mapToInt(Room::numberOfChildren).sum();
+  }
+
   public LocalDate getFromDate() {
     return fromDate;
   }

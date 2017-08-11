@@ -11,6 +11,10 @@ public class BusinessConstraintsFactory {
     return new NumberOfAdults(c);
   }
 
+  public static NumberOfChildren childrenCount(Constraint c) {
+    return new NumberOfChildren(c);
+  }
+
   public static NumberOfRooms roomCount(Constraint c) {
     return new NumberOfRooms(c);
   }
