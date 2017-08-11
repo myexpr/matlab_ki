@@ -1,29 +1,35 @@
 package _con.text.hotel.engine;
 
+import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.adultCount;
+import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.isWeekday;
+import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.isWeekend;
+import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.nights;
+import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.roomCount;
+import static _con.text.hotel.constraint.simple.ConstraintFactory.eq;
+import static _con.text.hotel.constraint.simple.ConstraintFactory.gtelte;
 import static java.util.Arrays.asList;
 
 import _con.text.hotel.constraint.business.BusinessConstraints;
-import _con.text.hotel.constraint.business.NumberOfAdults;
-import _con.text.hotel.constraint.business.NumberOfNights;
-import _con.text.hotel.constraint.business.NumberOfRooms;
-import _con.text.hotel.constraint.business.OverWeekday;
-import _con.text.hotel.constraint.simple.Eq;
-import _con.text.hotel.constraint.simple.GteLte;
 import _con.text.hotel.model.SearchRequest;
 import java.util.List;
 
 public enum SearchType {
 
-  BUSINESS_TRIP(asList(
-      new NumberOfAdults(new Eq(1)),
-      new NumberOfRooms(new Eq(1)),
-      new NumberOfNights(new GteLte(1, 3)),
-      new OverWeekday()));
+  BUSINESS_TRIP(asList(adultCount(eq(1)),
+      roomCount(eq(1)),
+      nights(gtelte(1, 3)),
+      isWeekday())),
+  WEEKEND_GETAWAY(asList(
+      adultCount(eq(2)),
+      roomCount(eq(1)),
+      isWeekend()
+  ));
 
   private final List<BusinessConstraints> constraints;
-    SearchType(List<BusinessConstraints> constraints) {
-      this.constraints = constraints;
-    }
+
+  SearchType(List<BusinessConstraints> constraints) {
+    this.constraints = constraints;
+  }
 
   public boolean evaluate(SearchRequest request) {
     long countOfPassConstraints = constraints.stream().filter(c -> {

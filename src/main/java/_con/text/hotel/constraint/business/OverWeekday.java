@@ -20,7 +20,7 @@ public class OverWeekday implements BusinessConstraints {
         endDay.getValue() <= FRIDAY.getValue();
   }
 
-  private DayOfWeek determineDayOfWeek(LocalDate date) {
+  protected DayOfWeek determineDayOfWeek(LocalDate date) {
     return of(date.get(ChronoField.DAY_OF_WEEK));
   }
 }
