@@ -8,7 +8,8 @@ import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.nig
 import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.roomCount;
 import static _con.text.hotel.constraint.simple.ConstraintFactory.eq;
 import static _con.text.hotel.constraint.simple.ConstraintFactory.gtelte;
-import static java.lang.Math.*;
+import static java.lang.Math.round;
+import static java.lang.Math.toIntExact;
 import static java.util.Arrays.asList;
 
 import _con.text.hotel.constraint.business.BusinessConstraints;
