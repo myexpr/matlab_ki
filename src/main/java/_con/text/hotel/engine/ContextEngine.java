@@ -20,8 +20,8 @@ public class ContextEngine {
   }
 
 
-  public List<ProbabilityMatch> probabilisticMatch(SearchRequest request) {
-    List<ProbabilityMatch> probabilityMatches = asList(SearchType.values())
+  public List<PartialMatch> probabilisticMatch(SearchRequest request) {
+    List<PartialMatch> partialMatches = asList(SearchType.values())
         .stream()
         .map(t -> {
           return t.probabilisticEvaluation(request);
@@ -30,6 +30,6 @@ public class ContextEngine {
           return p.getProbability() > 70;
         })
         .collect(toList());
-    return probabilityMatches;
+    return partialMatches;
   }
 }

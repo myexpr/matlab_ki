@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import _con.text.hotel.engine.ProbabilityMatch;
+import _con.text.hotel.engine.PartialMatch;
 import _con.text.hotel.engine.SearchType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -39,8 +39,8 @@ public class SearchTypeTest {
     matchedTypes.put(WEEKEND_GETAWAY_NUCLEAR_FAMILY, 100);
     matchedTypes.put(VACATION_NUCLEAR_FAMILY, 75);
 
-    assertEquals(new ProbabilityMatch(WEEKEND_GETAWAY_ADULTS, new Integer(75)), WEEKEND_GETAWAY_ADULTS.probabilisticEvaluation(request));
-    assertEquals(new ProbabilityMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, new Integer(100)), WEEKEND_GETAWAY_NUCLEAR_FAMILY.probabilisticEvaluation(request));
+    assertEquals(new PartialMatch(WEEKEND_GETAWAY_ADULTS, new Integer(75)), WEEKEND_GETAWAY_ADULTS.probabilisticEvaluation(request));
+    assertEquals(new PartialMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, new Integer(100)), WEEKEND_GETAWAY_NUCLEAR_FAMILY.probabilisticEvaluation(request));
   }
 
 }

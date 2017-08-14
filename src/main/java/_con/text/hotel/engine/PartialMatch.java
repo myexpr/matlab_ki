@@ -3,12 +3,12 @@ package _con.text.hotel.engine;
 
 import java.util.Objects;
 
-public class ProbabilityMatch {
+public class PartialMatch {
 
   Integer probability;
   SearchType searchType;
 
-  public ProbabilityMatch(SearchType searchType, Integer probability) {
+  public PartialMatch(SearchType searchType, Integer probability) {
     this.probability = probability;
     this.searchType = searchType;
   }
@@ -29,7 +29,7 @@ public class ProbabilityMatch {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ProbabilityMatch that = (ProbabilityMatch) o;
+    PartialMatch that = (PartialMatch) o;
     return Objects.equals(probability, that.probability) &&
         searchType == that.searchType;
   }
@@ -41,7 +41,7 @@ public class ProbabilityMatch {
 
   @Override
   public String toString() {
-    return "ProbabilityMatch{" +
+    return "PartialMatch{" +
         "searchType=" + searchType +
         ", probability=" + probability +
         '}';

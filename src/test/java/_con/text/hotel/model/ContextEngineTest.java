@@ -11,7 +11,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 import _con.text.hotel.engine.ContextEngine;
-import _con.text.hotel.engine.ProbabilityMatch;
+import _con.text.hotel.engine.PartialMatch;
 import _con.text.hotel.engine.SearchType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -59,11 +59,11 @@ public class ContextEngineTest {
     SearchRequest request = new SearchRequest("A_DESTINATION", firstFriday, followingSunday,
         roomWithKids);
 
-    List<ProbabilityMatch> probabilityMatches = asList(
-        new ProbabilityMatch(WEEKEND_GETAWAY_ADULTS, 75),
-        new ProbabilityMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, 100),
-        new ProbabilityMatch(VACATION_NUCLEAR_FAMILY, 75));
-    assertEquals(probabilityMatches, engine.probabilisticMatch(request));
+    List<PartialMatch> partialMatches = asList(
+        new PartialMatch(WEEKEND_GETAWAY_ADULTS, 75),
+        new PartialMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, 100),
+        new PartialMatch(VACATION_NUCLEAR_FAMILY, 75));
+    assertEquals(partialMatches, engine.probabilisticMatch(request));
   }
 
 

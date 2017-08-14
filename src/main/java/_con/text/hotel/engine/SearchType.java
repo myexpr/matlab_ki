@@ -53,11 +53,11 @@ public enum SearchType {
     return constraints.size() == countOfPassConstraints;
   }
 
-  public ProbabilityMatch probabilisticEvaluation(SearchRequest request) {
+  public PartialMatch probabilisticEvaluation(SearchRequest request) {
     long countOfPassConstraints = getCountOfPassConstraints(request);
     Integer probability = toIntExact(
         round((new Double(countOfPassConstraints) / new Double(constraints.size())) * 100));
-    return new ProbabilityMatch(this, probability);
+    return new PartialMatch(this, probability);
   }
 
   private long getCountOfPassConstraints(SearchRequest request) {
