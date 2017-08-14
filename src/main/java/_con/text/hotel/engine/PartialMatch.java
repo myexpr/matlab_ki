@@ -5,16 +5,16 @@ import java.util.Objects;
 
 public class PartialMatch {
 
-  Integer probability;
+  Integer matchPercentage;
   SearchType searchType;
 
-  public PartialMatch(SearchType searchType, Integer probability) {
-    this.probability = probability;
+  public PartialMatch(SearchType searchType, Integer matchPercentage) {
+    this.matchPercentage = matchPercentage;
     this.searchType = searchType;
   }
 
-  public Integer getProbability() {
-    return probability;
+  public Integer getMatchPercentage() {
+    return matchPercentage;
   }
 
   public SearchType getSearchType() {
@@ -30,20 +30,20 @@ public class PartialMatch {
       return false;
     }
     PartialMatch that = (PartialMatch) o;
-    return Objects.equals(probability, that.probability) &&
+    return Objects.equals(matchPercentage, that.matchPercentage) &&
         searchType == that.searchType;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(probability, searchType);
+    return Objects.hash(matchPercentage, searchType);
   }
 
   @Override
   public String toString() {
     return "PartialMatch{" +
         "searchType=" + searchType +
-        ", probability=" + probability +
+        ", matchPercentage=" + matchPercentage +
         '}';
   }
 }

@@ -27,7 +27,7 @@ public class ContextEngine {
           return t.probabilisticEvaluation(request);
         })
         .filter(p -> {
-          return p.getProbability() > 70;
+          return p.getMatchPercentage() > 70;
         })
         .collect(toList());
     return partialMatches;
