@@ -8,6 +8,7 @@ import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.nig
 import static _con.text.hotel.constraint.business.BusinessConstraintsFactory.roomCount;
 import static _con.text.hotel.constraint.simple.ConstraintFactory.eq;
 import static _con.text.hotel.constraint.simple.ConstraintFactory.gtelte;
+import static java.lang.Math.*;
 import static java.util.Arrays.asList;
 
 import _con.text.hotel.constraint.business.BusinessConstraints;
@@ -20,7 +21,6 @@ public enum SearchType {
       roomCount(eq(1)),
       nights(gtelte(1, 3)),
       isWeekday()),
-//  WEEKEND_GETAWAY(isWeekend()),
   WEEKEND_GETAWAY_ADULTS(
       adultCount(gtelte(1, 4)),
       childrenCount(eq(0)),
@@ -32,9 +32,9 @@ public enum SearchType {
       roomCount(gtelte(1, 2)),
       isWeekend()),
   WEEKEND_GETAWAY_FAMILIES(
-      adultCount(gtelte(1, 4)),
-      childrenCount(gtelte(1, 5)),
-      roomCount(gtelte(1, 2)),
+      adultCount(gtelte(3, 4)),
+      childrenCount(gtelte(3, 5)),
+      roomCount(gtelte(2, 3)),
       isWeekend()),
   VACATION_NUCLEAR_FAMILY(
       adultCount(gtelte(1, 2)),
@@ -49,11 +49,20 @@ public enum SearchType {
   }
 
   public boolean evaluate(SearchRequest request) {
-    long countOfPassConstraints = constraints.stream().filter(c -> {
-      return c.evaluate(request);
-    }).count();
-
+    long countOfPassConstraints = getCountOfPassConstraints(request);
     return constraints.size() == countOfPassConstraints;
   }
 
+  public ProbabilityMatch probabilisticEvaluation(SearchRequest request) {
+    long countOfPassConstraints = getCountOfPassConstraints(request);
+    Integer probability = toIntExact(
+        round((new Double(countOfPassConstraints) / new Double(constraints.size())) * 100));
+    return new ProbabilityMatch(this, probability);
+  }
+
+  private long getCountOfPassConstraints(SearchRequest request) {
+    return constraints.stream().filter(c -> {
+        return c.evaluate(request);
+      }).count();
+  }
 }
