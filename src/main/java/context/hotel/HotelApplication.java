@@ -16,14 +16,13 @@ public class HotelApplication {
 
   @Bean
   public CommandLineRunner demo(DestinationRepository repository) {
+    System.out.println("in command runner");
+    System.out.println(repository);
     return (args) -> {
-      repository.save(new Destination(1, "foo", "", "GB", -1.009, -56.98));
-      repository.save(new Destination(2, "foo2", "", "GB", -1.009, -56.98));
 
-      for (Destination d : repository.findAll()) {
+      for (Destination d : repository.findByCity("Pittsburgh")) {
         System.out.println(d.toString());
       }
-
     };
   }
 

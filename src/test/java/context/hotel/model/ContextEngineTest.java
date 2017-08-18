@@ -63,7 +63,7 @@ public class ContextEngineTest {
         new PartialMatch(WEEKEND_GETAWAY_ADULTS, 75),
         new PartialMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, 100),
         new PartialMatch(VACATION_NUCLEAR_FAMILY, 75));
-    assertEquals(partialMatches, engine.probabilisticMatch(request));
+    assertEquals(partialMatches, engine.partialMatches(request));
   }
 
 

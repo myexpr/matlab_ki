@@ -20,7 +20,7 @@ public class ContextEngine {
   }
 
 
-  public List<PartialMatch> probabilisticMatch(SearchRequest request) {
+  public List<PartialMatch> partialMatches(SearchRequest request) {
     List<PartialMatch> partialMatches = asList(SearchType.values())
         .stream()
         .map(t -> {
