@@ -7,6 +7,8 @@ import javax.persistence.Id;
 @Entity
 public class Destination {
 
+  public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
+
   @Id
   Integer destinationId;
   String city;
@@ -84,5 +86,19 @@ public class Destination {
         ", latitude=" + latitude +
         ", longitude=" + longitude +
         '}';
+  }
+
+  public Integer distanceFrom(double aLatitude, double aLongitude) {
+
+    double latDistance = Math.toRadians(latitude - aLatitude);
+    double lngDistance = Math.toRadians(longitude - aLongitude);
+
+    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+        + Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(aLatitude))
+        * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
+
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_KM * c));
   }
 }
