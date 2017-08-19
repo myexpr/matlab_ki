@@ -1,4 +1,4 @@
-package context.hotel.constraint.simple;
+package context.hotel.contextof.occupancy.math;
 
 public interface Constraint {
 

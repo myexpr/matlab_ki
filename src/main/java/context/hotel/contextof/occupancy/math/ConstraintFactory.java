@@ -1,4 +1,4 @@
-package context.hotel.constraint.simple;
+package context.hotel.contextof.occupancy.math;
 
 /**
  * Created by araman on 11/08/2017.

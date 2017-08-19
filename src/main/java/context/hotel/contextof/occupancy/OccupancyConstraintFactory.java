@@ -1,6 +1,6 @@
-package context.hotel.constraint.occupancy;
+package context.hotel.contextof.occupancy;
 
-import context.hotel.constraint.simple.Constraint;
+import context.hotel.contextof.occupancy.math.Constraint;
 
 /**
  * Created by araman on 11/08/2017.

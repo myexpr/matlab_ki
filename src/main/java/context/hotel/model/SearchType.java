@@ -1,18 +1,18 @@
 package context.hotel.model;
 
-import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.adultCount;
-import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.childrenCount;
-import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.isWeekday;
-import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.isWeekend;
-import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.nights;
-import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.roomCount;
-import static context.hotel.constraint.simple.ConstraintFactory.eq;
-import static context.hotel.constraint.simple.ConstraintFactory.gtelte;
+import static context.hotel.contextof.occupancy.OccupancyConstraintFactory.adultCount;
+import static context.hotel.contextof.occupancy.OccupancyConstraintFactory.childrenCount;
+import static context.hotel.contextof.occupancy.OccupancyConstraintFactory.isWeekday;
+import static context.hotel.contextof.occupancy.OccupancyConstraintFactory.isWeekend;
+import static context.hotel.contextof.occupancy.OccupancyConstraintFactory.nights;
+import static context.hotel.contextof.occupancy.OccupancyConstraintFactory.roomCount;
+import static context.hotel.contextof.occupancy.math.ConstraintFactory.eq;
+import static context.hotel.contextof.occupancy.math.ConstraintFactory.gtelte;
 import static java.lang.Math.round;
 import static java.lang.Math.toIntExact;
 import static java.util.Arrays.asList;
 
-import context.hotel.constraint.occupancy.OccupancyConstraint;
+import context.hotel.contextof.occupancy.OccupancyConstraint;
 import java.util.List;
 
 public enum SearchType {

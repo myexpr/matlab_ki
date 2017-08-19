@@ -2,7 +2,7 @@ package context.hotel.engine;
 
 import static java.util.stream.Collectors.groupingBy;
 
-import context.hotel.constraint.travelmode.TravelModeFeasibilityService;
+import context.hotel.contextof.travelmode.Travel;
 import context.hotel.model.Feasibility;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
@@ -17,14 +17,14 @@ import org.springframework.stereotype.Component;
  * Created by araman on 19/08/2017.
  */
 @Component
-public class FeasibleTravelModeService {
+public class TravelModeContextService {
 
   @Autowired
-  List<TravelModeFeasibilityService> feasibilityServices;
+  List<Travel> travels;
 
   public Map<Feasibility, List<TravelModeMatch>> getFeasibleTravelModes(SearchRequest request) {
 
-    Map<Feasibility, List<TravelModeMatch>> results = feasibilityServices
+    Map<Feasibility, List<TravelModeMatch>> results = travels
         .stream()
         .map(svc -> {
           TimeDistance timeDistance = svc.determineTimeDistance(request);

@@ -1,6 +1,6 @@
-package context.hotel.constraint.occupancy;
+package context.hotel.contextof.occupancy;
 
-import context.hotel.constraint.simple.Constraint;
+import context.hotel.contextof.occupancy.math.Constraint;
 import context.hotel.model.SearchRequest;
 
 public class NumberOfNights implements OccupancyConstraint {

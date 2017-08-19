@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ContextEngine {
+public class SearchTypeContextService {
 
   public SearchType deterministicEvaluation(SearchRequest request) {
     SearchType matchedType = null;

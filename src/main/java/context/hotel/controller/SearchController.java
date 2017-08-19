@@ -1,7 +1,7 @@
 package context.hotel.controller;
 
 
-import context.hotel.engine.ContextEngine;
+import context.hotel.engine.SearchTypeContextService;
 import context.hotel.model.Destination;
 import context.hotel.model.PartialMatch;
 import context.hotel.model.SearchRequest;
@@ -20,7 +20,7 @@ public class SearchController {
   @Autowired
   DestinationRepository destinationRepository;
   @Autowired
-  ContextEngine contextEngine;
+  SearchTypeContextService searchTypeContextService;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
 
@@ -31,7 +31,7 @@ public class SearchController {
         .findOne(searchRequest.getDestinationId());
     searchRequest.setResolvedDestination(resolvedDestination);
 
-    List<PartialMatch> partialMatches = contextEngine.deriveContext(searchRequest);
+    List<PartialMatch> partialMatches = searchTypeContextService.deriveContext(searchRequest);
 
     return partialMatches;
   }

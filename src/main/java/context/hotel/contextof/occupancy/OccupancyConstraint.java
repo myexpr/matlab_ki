@@ -1,4 +1,4 @@
-package context.hotel.constraint.occupancy;
+package context.hotel.contextof.occupancy;
 
 import context.hotel.model.SearchRequest;
 

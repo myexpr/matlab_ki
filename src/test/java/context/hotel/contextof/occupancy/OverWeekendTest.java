@@ -1,10 +1,10 @@
-package context.hotel.model.constraint.occupancy;
+package context.hotel.contextof.occupancy;
 
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
 
-import context.hotel.constraint.occupancy.OverWeekend;
+import context.hotel.contextof.occupancy.OverWeekend;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import java.time.DayOfWeek;

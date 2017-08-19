@@ -1,4 +1,4 @@
-package context.hotel.constraint.travelmode;
+package context.hotel.contextof.travelmode;
 
 import static com.eclipsesource.json.Json.parse;
 
@@ -15,10 +15,10 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by araman on 19/08/2017.
  */
-public abstract class RoadRailFeasibilityService implements TravelModeFeasibilityService {
+public abstract class AbstractRoadRail implements Travel {
 
   private static final String API_END_POINT = "https://maps.googleapis.com/maps/api/directions/json?origin={ORIGIN}&destination={DESTINATION}&key={API_KEY}&mode={MODE}";
-  private static final Logger LOGGER = LoggerFactory.getLogger(RoadRailFeasibilityService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRoadRail.class);
 
   public TimeDistance determineTimeDistance(SearchRequest searchRequest) {
     RestTemplate restTemplate = new RestTemplate();

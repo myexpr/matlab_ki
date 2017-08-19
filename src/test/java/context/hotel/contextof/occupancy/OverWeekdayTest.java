@@ -1,4 +1,4 @@
-package context.hotel.model.constraint.occupancy;
+package context.hotel.contextof.occupancy;
 
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.MONDAY;
@@ -7,7 +7,7 @@ import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import context.hotel.constraint.occupancy.OverWeekday;
+import context.hotel.contextof.occupancy.OverWeekday;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import java.time.DayOfWeek;

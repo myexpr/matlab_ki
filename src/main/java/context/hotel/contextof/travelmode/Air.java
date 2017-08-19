@@ -1,4 +1,4 @@
-package context.hotel.constraint.travelmode;
+package context.hotel.contextof.travelmode;
 
 import static com.eclipsesource.json.Json.parse;
 import static context.hotel.model.Feasibility.INFEASIBLE;
@@ -23,12 +23,12 @@ import org.springframework.web.client.RestTemplate;
  * Created by araman on 19/08/2017.
  */
 @Component
-public class AirTravelFeasibility extends RoadRailFeasibilityService {
+public class Air implements Travel {
 
   private static final String GOOGLE_PLACES_API =
       "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={LATITUDE},{LONGITUDE}&radius=100000&type=airport&key={API_KEY}";
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AirTravelFeasibility.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(Air.class);
 
   @Override
   public TimeDistance determineTimeDistance(SearchRequest searchRequest) {
@@ -39,7 +39,7 @@ public class AirTravelFeasibility extends RoadRailFeasibilityService {
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("LATITUDE", destination.getLatitude().toString());
     myParameters.put("LONGITUDE", destination.getLongitude().toString());
-    myParameters.put("API_KEY", "AIzaSyBtDyFsWO-XXXXXXX-qjjY4nHkk");
+    myParameters.put("API_KEY", "AIzaSyBtDyFsWO-XXXXXXXX-qjjY4nHkk");
 
     String apiResponse = restTemplate.getForObject(GOOGLE_PLACES_API, String.class, myParameters);
     JsonObject jsonResponse = parse(apiResponse).asObject();

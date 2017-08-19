@@ -31,10 +31,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FeasibleTravelModeServiceTest {
+public class TravelModeContextServiceTest {
 
   @Autowired
-  FeasibleTravelModeService feasibleTravelModeService;
+  TravelModeContextService travelModeContextService;
 
   @Autowired
   DestinationRepository destinationRepository;
@@ -62,7 +62,7 @@ public class FeasibleTravelModeServiceTest {
 
   @Test
   public void road_and_rail_should_be_Preferred_TravelMode_for_london_bath() {
-    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = feasibleTravelModeService
+    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = travelModeContextService
         .getFeasibleTravelModes(A_SEARCH_TO_BATH_FROM_LONDON_WITH_NO_CHILDREN);
     List<TravelMode> expectedPreferredTravelModes = asList(ROAD, RAIL);
     List<TravelMode> actualTravelModes = feasibleTravelModes
@@ -75,7 +75,7 @@ public class FeasibleTravelModeServiceTest {
 
   @Test
   public void rail_should_be_difficult_TravelMode_for_edinburgh_bath() {
-    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = feasibleTravelModeService
+    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = travelModeContextService
         .getFeasibleTravelModes(A_SEARCH_TO_BATH_FROM_EDINB_WITH_NO_CHILDREN);
     List<TravelMode> expectedPreferredTravelModes = asList(RAIL);
     List<TravelMode> actualTravelModes = feasibleTravelModes
@@ -89,7 +89,7 @@ public class FeasibleTravelModeServiceTest {
 
   @Test
   public void rail_road_should_be_infeasible_TravelMode_for_london_delhi() {
-    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = feasibleTravelModeService
+    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = travelModeContextService
         .getFeasibleTravelModes(A_SEARCH_TO_DELHI_FROM_LONDON_WITH_NO_CHILDREN);
     System.out.println(feasibleTravelModes);
     List<TravelMode> expectedPreferredTravelModes = asList(ROAD, RAIL);

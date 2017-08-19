@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.junit.Test;
 
-public class ContextEngineTest {
+public class SearchTypeContextServiceTest {
 
   private static final String A_DESTINATION = "FOO_BAR";
   private static final Room A_ROOM_FOR_ONE_ADULT = new Room(1, 0);
@@ -31,7 +31,7 @@ public class ContextEngineTest {
 
   @Test
   public void evaluatedAsBusinessTrip() {
-    ContextEngine engine = new ContextEngine();
+    SearchTypeContextService engine = new SearchTypeContextService();
     SearchRequest request = new SearchRequest(A_DESTINATION, TOMORROW, DAY_AFTER_TOMORROW,
         asList(A_ROOM_FOR_ONE_ADULT), null);
     SearchType evaluatedType = engine.deterministicEvaluation(request);
@@ -40,7 +40,7 @@ public class ContextEngineTest {
 
   @Test
   public void notABusinessTrip() {
-    ContextEngine engine = new ContextEngine();
+    SearchTypeContextService engine = new SearchTypeContextService();
     LocalDate nextMonthsFirstSaturday = LocalDate.now()
         .with(firstDayOfNextMonth())
         .with(firstInMonth(DayOfWeek.SATURDAY));
@@ -53,7 +53,7 @@ public class ContextEngineTest {
 
   @Test
   public void multipleProbableMatches() {
-    ContextEngine engine = new ContextEngine();
+    SearchTypeContextService engine = new SearchTypeContextService();
     LocalDate firstFriday = now().with(firstDayOfNextMonth()).with(firstInMonth(DayOfWeek.FRIDAY));
     LocalDate followingSunday = firstFriday.plusDays(2);
     Room roomWithKids = new Room(2, 2);

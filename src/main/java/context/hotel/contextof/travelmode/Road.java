@@ -1,4 +1,4 @@
-package context.hotel.constraint.travelmode;
+package context.hotel.contextof.travelmode;
 
 import static context.hotel.model.Feasibility.DIFFICULT;
 import static context.hotel.model.Feasibility.INFEASIBLE;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * Created by araman on 19/08/2017.
  */
 @Component
-public class RoadTravelFeasibility extends RoadRailFeasibilityService {
+public class Road extends AbstractRoadRail {
 
   @Override
   public Feasibility determineFeasibility(TimeDistance timeDistance, SearchRequest request) {

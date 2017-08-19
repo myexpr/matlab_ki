@@ -1,4 +1,4 @@
-package context.hotel.constraint.travelmode;
+package context.hotel.contextof.travelmode;
 
 import static context.hotel.model.Feasibility.*;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * Created by araman on 19/08/2017.
  */
 @Component
-public class TrainTravelFeasibility extends RoadRailFeasibilityService {
+public class Train extends AbstractRoadRail {
 
   @Override
   public Feasibility determineFeasibility(TimeDistance timeDistance, SearchRequest request) {
