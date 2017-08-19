@@ -22,10 +22,10 @@ public class OverWeekdayTest {
   private static final String A_DESTINATION = "FOO_BAR";
   private static final Room A_ROOM_FOR_ONE_ADULT = new Room(1, 0);
   private static final SearchRequest A_WEEKDAY_REQUEST = new SearchRequest(A_DESTINATION, nextMonthsFirst(MONDAY),
-      nextMonthsFirst(MONDAY).plusDays(4), A_ROOM_FOR_ONE_ADULT);
+      nextMonthsFirst(MONDAY).plusDays(4), A_ROOM_FOR_ONE_ADULT, null);
 
   private static final SearchRequest NOT_A_WEEKDAY_REQUEST = new SearchRequest(A_DESTINATION,
-      nextMonthsFirst(FRIDAY), nextMonthsFirst(FRIDAY).plusDays(1), A_ROOM_FOR_ONE_ADULT);
+      nextMonthsFirst(FRIDAY), nextMonthsFirst(FRIDAY).plusDays(1), A_ROOM_FOR_ONE_ADULT, null);
 
   @Test
   public void requestIsExclusivelyOverWeekdays() {

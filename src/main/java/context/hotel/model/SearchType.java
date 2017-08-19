@@ -1,4 +1,4 @@
-package context.hotel.engine;
+package context.hotel.model;
 
 import static context.hotel.constraint.business.BusinessConstraintsFactory.adultCount;
 import static context.hotel.constraint.business.BusinessConstraintsFactory.childrenCount;
@@ -13,7 +13,6 @@ import static java.lang.Math.toIntExact;
 import static java.util.Arrays.asList;
 
 import context.hotel.constraint.business.BusinessConstraints;
-import context.hotel.model.SearchRequest;
 import java.util.List;
 
 public enum SearchType {
@@ -52,7 +51,7 @@ public enum SearchType {
   public boolean evaluate(SearchRequest request) {
     long countOfPassConstraints = getCountOfPassConstraints(request);
     return constraints.size() == countOfPassConstraints;
-  }
+}
 
   public PartialMatch probabilisticEvaluation(SearchRequest request) {
     long countOfPassConstraints = getCountOfPassConstraints(request);

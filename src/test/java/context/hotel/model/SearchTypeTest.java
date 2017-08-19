@@ -1,8 +1,8 @@
 package context.hotel.model;
 
-import static context.hotel.engine.SearchType.WEEKEND_GETAWAY_ADULTS;
-import static context.hotel.engine.SearchType.WEEKEND_GETAWAY_FAMILIES;
-import static context.hotel.engine.SearchType.WEEKEND_GETAWAY_NUCLEAR_FAMILY;
+import static context.hotel.model.SearchType.WEEKEND_GETAWAY_ADULTS;
+import static context.hotel.model.SearchType.WEEKEND_GETAWAY_FAMILIES;
+import static context.hotel.model.SearchType.WEEKEND_GETAWAY_NUCLEAR_FAMILY;
 import static java.time.LocalDate.now;
 import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
@@ -10,7 +10,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import context.hotel.engine.PartialMatch;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class SearchTypeTest {
     LocalDate followingSunday = firstFriday.plusDays(2);
     Room roomWithKids = new Room(2, 2);
     SearchRequest request = new SearchRequest("A_DESTINATION", firstFriday, followingSunday,
-        roomWithKids);
+        roomWithKids, null);
 
     assertFalse(WEEKEND_GETAWAY_ADULTS.evaluate(request));
     assertFalse(WEEKEND_GETAWAY_FAMILIES.evaluate(request));

@@ -1,4 +1,4 @@
-package context.hotel.engine;
+package context.hotel.model;
 
 
 import java.util.Objects;

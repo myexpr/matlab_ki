@@ -22,14 +22,14 @@ public class SearchRequestTest {
   @Test
   public void requestIsFor2Days() {
     SearchRequest request = new SearchRequest(A_DESTINATION, TOMORROW, TOMORROW_PLUS_2_DAYS,
-        asList(A_ROOM_FOR_ONE_ADULT));
+        asList(A_ROOM_FOR_ONE_ADULT), null);
     assertEquals(new Integer(2), request.numberOfNights());
   }
 
   @Test
   public void requestIsFor1Person() {
     SearchRequest request = new SearchRequest(A_DESTINATION, TOMORROW, TOMORROW_PLUS_2_DAYS,
-        asList(A_ROOM_FOR_ONE_ADULT));
+        asList(A_ROOM_FOR_ONE_ADULT), null);
     assertTrue(request.singleOccupancy());
     assertFalse(request.partyWithChildren());
   }
@@ -37,12 +37,12 @@ public class SearchRequestTest {
   @Test
   public void requestIsForAFamily() {
     SearchRequest request = new SearchRequest(A_DESTINATION, TOMORROW, TOMORROW_PLUS_2_DAYS,
-        asList(A_ROOM_FOR_SMALL_FAMILY));
+        asList(A_ROOM_FOR_SMALL_FAMILY), null);
     assertFalse(request.singleOccupancy());
     assertTrue(request.partyWithChildren());
 
     SearchRequest anotherRequest = new SearchRequest(A_DESTINATION, TOMORROW, TOMORROW_PLUS_2_DAYS,
-        asList(AN_ADULT_ACCOMPANYING_CHILDREN));
+        asList(AN_ADULT_ACCOMPANYING_CHILDREN), null);
     assertFalse(anotherRequest.singleOccupancy());
     assertTrue(anotherRequest.partyWithChildren());
   }

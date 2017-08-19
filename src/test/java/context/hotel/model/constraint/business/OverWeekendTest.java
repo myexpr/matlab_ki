@@ -17,7 +17,7 @@ public class OverWeekendTest {
   private static final String A_DESTINATION = "FOO_BAR";
   private static final Room A_ROOM_FOR_ONE_ADULT = new Room(1, 0);
   private static final SearchRequest NOT_A_WEEKDAY_REQUEST = new SearchRequest(A_DESTINATION,
-      nextMonthsFirst(FRIDAY), nextMonthsFirst(FRIDAY).plusDays(2), A_ROOM_FOR_ONE_ADULT);
+      nextMonthsFirst(FRIDAY), nextMonthsFirst(FRIDAY).plusDays(2), A_ROOM_FOR_ONE_ADULT, null);
 
   @Test
   public void isAWeekendRequest() {

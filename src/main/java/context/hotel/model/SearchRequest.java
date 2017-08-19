@@ -1,5 +1,6 @@
 package context.hotel.model;
 
+import static java.lang.String.format;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.Arrays.asList;
 
@@ -8,23 +9,26 @@ import java.util.List;
 
 public class SearchRequest {
 
-  String destination;
+  String destinationId;
   LocalDate fromDate;
   LocalDate toDate;
   List<Room> rooms;
+  User user;
+  Destination resolvedDestination;
 
-  public SearchRequest(String destination, LocalDate fromDate, LocalDate toDate,
-      List<Room> rooms) {
+  public SearchRequest(String destinationId, LocalDate fromDate, LocalDate toDate,
+      List<Room> rooms, User user) {
     super();
-    this.destination = destination;
+    this.destinationId = destinationId;
     this.fromDate = fromDate;
     this.toDate = toDate;
     this.rooms = rooms;
+    this.user = user;
   }
 
-  public SearchRequest(String destination, LocalDate fromDate, LocalDate toDate,
-      Room room) {
-    this(destination, fromDate, toDate, asList(room));
+  public SearchRequest(String destinationId, LocalDate fromDate, LocalDate toDate,
+      Room room, User user) {
+    this(destinationId, fromDate, toDate, asList(room), user);
   }
 
   public Integer numberOfNights() {
@@ -52,6 +56,13 @@ public class SearchRequest {
     return rooms.stream().mapToInt(Room::numberOfChildren).sum();
   }
 
+  public String assumedUserOrigin() {
+    GeoCoordinate coordinate = user.getGeoCoordinate();
+    String result = format("%s,%s", coordinate.getLatitude(),
+        coordinate.getLongitude());
+    return result;
+  }
+
   public LocalDate getFromDate() {
     return fromDate;
   }
@@ -60,15 +71,35 @@ public class SearchRequest {
     return toDate;
   }
 
+  public String getDestinationId() {
+    return destinationId;
+  }
+
+  public List<Room> getRooms() {
+    return rooms;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public Destination getResolvedDestination() {
+    return resolvedDestination;
+  }
+
+  public void setResolvedDestination(Destination resolvedDestination) {
+    this.resolvedDestination = resolvedDestination;
+  }
+
   @Override
   public String toString() {
     return "SearchRequest{" +
-        "destination='" + destination + '\'' +
+        "destinationId='" + destinationId + '\'' +
         ", fromDate=" + fromDate +
         ", toDate=" + toDate +
         ", rooms=" + rooms +
+        ", user=" + user +
+        ", resolvedDestination=" + resolvedDestination +
         '}';
   }
-
-
 }

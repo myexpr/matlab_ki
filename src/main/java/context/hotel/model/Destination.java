@@ -10,7 +10,7 @@ public class Destination {
   public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
 
   @Id
-  Integer destinationId;
+  String destinationId;
   String city;
   String region;
   String countryCode;
@@ -20,7 +20,7 @@ public class Destination {
   public Destination() {
   }
 
-  public Destination(Integer destinationId, String city, String region, String countryCode,
+  public Destination(String destinationId, String city, String region, String countryCode,
       Double latitude, Double longitude) {
     this.destinationId = destinationId;
     this.city = city;
@@ -30,7 +30,7 @@ public class Destination {
     this.longitude = longitude;
   }
 
-  public Integer getDestinationId() {
+  public String getDestinationId() {
     return destinationId;
   }
 
@@ -100,5 +100,13 @@ public class Destination {
     double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_KM * c));
+  }
+
+  public String name() {
+    if (this.countryCode.equals("US")) {
+      return this.city + ", " + this.region + ", " + this.countryCode;
+    } else {
+      return this.city + ", " + this.countryCode;
+    }
   }
 }
