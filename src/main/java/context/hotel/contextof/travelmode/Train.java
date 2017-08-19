@@ -1,6 +1,9 @@
 package context.hotel.contextof.travelmode;
 
-import static context.hotel.model.Feasibility.*;
+import static context.hotel.model.Feasibility.DIFFICULT;
+import static context.hotel.model.Feasibility.INFEASIBLE;
+import static context.hotel.model.Feasibility.PREFERRED;
+import static context.hotel.model.Feasibility.REASONABLE_STRETCH;
 
 import context.hotel.model.Feasibility;
 import context.hotel.model.InfeasibleRoute;
@@ -25,10 +28,12 @@ public class Train extends AbstractRoadRail {
     if (timeDistance.getTime() < 2 * secondsPerHour) {
       return DIFFICULT;
     }
-    if (timeDistance.getTime() >= 2 * secondsPerHour && timeDistance.getTime() < 4 * secondsPerHour) {
+    if (timeDistance.getTime() >= 2 * secondsPerHour
+        && timeDistance.getTime() < 4 * secondsPerHour) {
       return PREFERRED;
     }
-    if (timeDistance.getTime() >= 4 * secondsPerHour && timeDistance.getTime() < 7 * secondsPerHour) {
+    if (timeDistance.getTime() >= 4 * secondsPerHour
+        && timeDistance.getTime() < 7 * secondsPerHour) {
       return REASONABLE_STRETCH;
     }
     if (timeDistance.getTime() > 7 * secondsPerHour) {

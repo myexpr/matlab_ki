@@ -7,7 +7,6 @@ import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import context.hotel.contextof.occupancy.OverWeekday;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import java.time.DayOfWeek;
@@ -21,7 +20,8 @@ public class OverWeekdayTest {
 
   private static final String A_DESTINATION = "FOO_BAR";
   private static final Room A_ROOM_FOR_ONE_ADULT = new Room(1, 0);
-  private static final SearchRequest A_WEEKDAY_REQUEST = new SearchRequest(A_DESTINATION, nextMonthsFirst(MONDAY),
+  private static final SearchRequest A_WEEKDAY_REQUEST = new SearchRequest(A_DESTINATION,
+      nextMonthsFirst(MONDAY),
       nextMonthsFirst(MONDAY).plusDays(4), A_ROOM_FOR_ONE_ADULT, null);
 
   private static final SearchRequest NOT_A_WEEKDAY_REQUEST = new SearchRequest(A_DESTINATION,

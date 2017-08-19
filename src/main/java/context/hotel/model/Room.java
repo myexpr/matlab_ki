@@ -9,6 +9,7 @@ public class Room {
     this.adults = adults;
     this.children = children;
   }
+
   public Integer numberOfAdults() {
     return adults;
   }

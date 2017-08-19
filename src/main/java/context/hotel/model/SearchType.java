@@ -51,7 +51,7 @@ public enum SearchType {
   public boolean evaluate(SearchRequest request) {
     long countOfPassConstraints = getCountOfPassConstraints(request);
     return constraints.size() == countOfPassConstraints;
-}
+  }
 
   public PartialMatch probabilisticEvaluation(SearchRequest request) {
     long countOfPassConstraints = getCountOfPassConstraints(request);
@@ -62,7 +62,7 @@ public enum SearchType {
 
   private long getCountOfPassConstraints(SearchRequest request) {
     return constraints.stream().filter(c -> {
-        return c.evaluate(request);
-      }).count();
+      return c.evaluate(request);
+    }).count();
   }
 }

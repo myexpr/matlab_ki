@@ -3,7 +3,7 @@ package context.hotel.contextof.travelmode;
 import static com.eclipsesource.json.Json.parse;
 import static context.hotel.model.Feasibility.INFEASIBLE;
 import static context.hotel.model.Feasibility.REASONABLE_STRETCH;
-import static context.hotel.model.TravelMode.*;
+import static context.hotel.model.TravelMode.AIR;
 
 import com.eclipsesource.json.JsonObject;
 import context.hotel.model.Destination;

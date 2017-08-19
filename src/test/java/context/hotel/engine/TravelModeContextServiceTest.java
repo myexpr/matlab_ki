@@ -1,6 +1,8 @@
 package context.hotel.engine;
 
-import static context.hotel.model.Feasibility.*;
+import static context.hotel.model.Feasibility.DIFFICULT;
+import static context.hotel.model.Feasibility.INFEASIBLE;
+import static context.hotel.model.Feasibility.PREFERRED;
 import static context.hotel.model.TravelMode.RAIL;
 import static context.hotel.model.TravelMode.ROAD;
 import static java.util.Arrays.asList;
@@ -50,6 +52,7 @@ public class TravelModeContextServiceTest {
   SearchRequest A_SEARCH_TO_DELHI_FROM_LONDON_WITH_NO_CHILDREN = new SearchRequest("25833",
       LocalDate.now().plusDays(7),
       LocalDate.now().plusDays(10), new Room(2, 0), new User(LONDON));
+
   @Before
   public void setup() {
     Destination d = destinationRepository.findOne("22547");
