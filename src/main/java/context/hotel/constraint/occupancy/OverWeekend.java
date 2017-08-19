@@ -1,4 +1,4 @@
-package context.hotel.constraint.business;
+package context.hotel.constraint.occupancy;
 
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.SUNDAY;

@@ -1,18 +1,18 @@
 package context.hotel.model;
 
-import static context.hotel.constraint.business.BusinessConstraintsFactory.adultCount;
-import static context.hotel.constraint.business.BusinessConstraintsFactory.childrenCount;
-import static context.hotel.constraint.business.BusinessConstraintsFactory.isWeekday;
-import static context.hotel.constraint.business.BusinessConstraintsFactory.isWeekend;
-import static context.hotel.constraint.business.BusinessConstraintsFactory.nights;
-import static context.hotel.constraint.business.BusinessConstraintsFactory.roomCount;
+import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.adultCount;
+import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.childrenCount;
+import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.isWeekday;
+import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.isWeekend;
+import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.nights;
+import static context.hotel.constraint.occupancy.OccupancyConstraintFactory.roomCount;
 import static context.hotel.constraint.simple.ConstraintFactory.eq;
 import static context.hotel.constraint.simple.ConstraintFactory.gtelte;
 import static java.lang.Math.round;
 import static java.lang.Math.toIntExact;
 import static java.util.Arrays.asList;
 
-import context.hotel.constraint.business.BusinessConstraints;
+import context.hotel.constraint.occupancy.OccupancyConstraint;
 import java.util.List;
 
 public enum SearchType {
@@ -42,9 +42,9 @@ public enum SearchType {
       roomCount(gtelte(1, 2)),
       nights(gtelte(3, 10)));
 
-  private final List<BusinessConstraints> constraints;
+  private final List<OccupancyConstraint> constraints;
 
-  SearchType(BusinessConstraints... constraints) {
+  SearchType(OccupancyConstraint... constraints) {
     this.constraints = asList(constraints);
   }
 

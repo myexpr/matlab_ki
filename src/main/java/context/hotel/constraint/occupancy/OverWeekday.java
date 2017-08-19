@@ -1,4 +1,4 @@
-package context.hotel.constraint.business;
+package context.hotel.constraint.occupancy;
 
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.MONDAY;
@@ -9,7 +9,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
-public class OverWeekday implements BusinessConstraints {
+public class OverWeekday implements OccupancyConstraint {
 
   @Override
   public boolean evaluate(SearchRequest request) {

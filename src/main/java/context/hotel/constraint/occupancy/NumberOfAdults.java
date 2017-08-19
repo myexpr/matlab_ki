@@ -1,9 +1,9 @@
-package context.hotel.constraint.business;
+package context.hotel.constraint.occupancy;
 
 import context.hotel.constraint.simple.Constraint;
 import context.hotel.model.SearchRequest;
 
-public class NumberOfAdults implements BusinessConstraints {
+public class NumberOfAdults implements OccupancyConstraint {
 
   private final Constraint constraint;
 

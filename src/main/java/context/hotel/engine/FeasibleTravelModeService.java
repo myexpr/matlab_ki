@@ -1,15 +1,15 @@
 package context.hotel.engine;
 
-import static context.hotel.model.TravelMode.RAIL;
-import static context.hotel.model.TravelMode.ROAD;
+import static java.util.stream.Collectors.groupingBy;
 
-import context.hotel.constraint.business.RoadTravelFeasibility;
+import context.hotel.constraint.travelmode.TravelModeFeasibilityService;
 import context.hotel.model.Destination;
 import context.hotel.model.Feasibility;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
 import context.hotel.model.TravelMode;
-import java.util.HashMap;
+import context.hotel.model.TravelModeMatch;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,17 +21,21 @@ import org.springframework.stereotype.Component;
 public class FeasibleTravelModeService {
 
   @Autowired
-  TimeDistanceService timeDistanceService;
+  List<TravelModeFeasibilityService> feasibilityServices;
 
-  @Autowired
-  RoadTravelFeasibility roadTravelFeasibility;
+  public Map<TravelMode, List<TravelModeMatch>> getFeasibleTravelModes(SearchRequest request,
+      Destination destination) {
 
-  public Map<TravelMode, Feasibility> getFeasibleTravelModes(SearchRequest request, Destination destination) {
-    TimeDistance viaRoad = timeDistanceService.timeAndDistanceTo(request.assumedUserOrigin(), destination.name(), ROAD);
-    TimeDistance viaTrain = timeDistanceService.timeAndDistanceTo(request.assumedUserOrigin(), destination.name(), RAIL);
-    Map<TravelMode, Feasibility> result = new HashMap<>();
-    result.put(ROAD, roadTravelFeasibility.roadFeasibility(viaRoad, request));
-    return result;
+    Map<TravelMode, List<TravelModeMatch>> results = feasibilityServices
+        .stream()
+        .map(svc -> {
+          TimeDistance timeDistance = svc.determineTimeDistance(request);
+          Feasibility feasibility = svc.determineFeasibility(timeDistance, request);
+          TravelMode travelMode = svc.forTravelMode();
+          return new TravelModeMatch(timeDistance, feasibility, travelMode);
+        })
+        .collect(groupingBy(TravelModeMatch::getTravelMode));
+    return results;
   }
 
 }

@@ -1,11 +1,11 @@
-package context.hotel.constraint.business;
+package context.hotel.constraint.occupancy;
 
 import context.hotel.constraint.simple.Constraint;
 
 /**
  * Created by araman on 11/08/2017.
  */
-public class BusinessConstraintsFactory {
+public class OccupancyConstraintFactory {
 
   public static NumberOfAdults adultCount(Constraint c) {
     return new NumberOfAdults(c);
