@@ -5,9 +5,9 @@ package context.hotel.model;
  */
 public enum TravelMode {
 
-  ROAD("DRIVING"), //within same country && d < 300 km
-  RAIL("TRANSIT"), //within same country && d > 300 km
-  AIR("UNDEFINED"); //different countries //within EU && d > 500
+  ROAD("driving"), //within same country && d < 300 km
+  RAIL("transit"), //within same country && d > 300 km
+  AIR("AIR"); //different countries //within EU && d > 500
 
   private String apiTransitMode;
 
@@ -21,8 +21,6 @@ public enum TravelMode {
 
   @Override
   public String toString() {
-    return "TravelMode{" +
-        "apiTransitMode='" + apiTransitMode + '\'' +
-        '}';
+    return name();
   }
 }

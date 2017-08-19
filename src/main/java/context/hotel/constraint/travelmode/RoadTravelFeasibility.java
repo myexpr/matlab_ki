@@ -20,18 +20,19 @@ public class RoadTravelFeasibility extends RoadRailFeasibilityService {
 
   @Override
   public Feasibility determineFeasibility(TimeDistance timeDistance, SearchRequest request) {
-    Feasibility result = null;
+    Feasibility result = INFEASIBLE;
+    int km = 1000;
     if (timeDistance instanceof InfeasibleRoute) {
-      result = INFEASIBLE;
+      return INFEASIBLE;
     }
-    if (timeDistance.getDistance() <= 500) {
-      result = PREFERRED;
+    if (timeDistance.getDistance() <= 500 * km) {
+      return PREFERRED;
     }
-    if (timeDistance.getDistance() > 500 && timeDistance.getDistance() < 800) {
-      result = request.partyWithChildren() ? DIFFICULT : REASONABLE_STRETCH;
+    if (timeDistance.getDistance() > 500 * km && timeDistance.getDistance() < 800 * km) {
+      return request.partyWithChildren() ? DIFFICULT : REASONABLE_STRETCH;
     }
-    if (timeDistance.getDistance() >= 800) {
-      result = request.partyWithChildren() ? INFEASIBLE : DIFFICULT;
+    if (timeDistance.getDistance() >= 800 * km) {
+      return request.partyWithChildren() ? INFEASIBLE : DIFFICULT;
     }
     return result;
   }

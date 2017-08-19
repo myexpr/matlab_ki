@@ -3,7 +3,6 @@ package context.hotel.engine;
 import static java.util.stream.Collectors.groupingBy;
 
 import context.hotel.constraint.travelmode.TravelModeFeasibilityService;
-import context.hotel.model.Destination;
 import context.hotel.model.Feasibility;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
@@ -23,18 +22,17 @@ public class FeasibleTravelModeService {
   @Autowired
   List<TravelModeFeasibilityService> feasibilityServices;
 
-  public Map<TravelMode, List<TravelModeMatch>> getFeasibleTravelModes(SearchRequest request,
-      Destination destination) {
+  public Map<Feasibility, List<TravelModeMatch>> getFeasibleTravelModes(SearchRequest request) {
 
-    Map<TravelMode, List<TravelModeMatch>> results = feasibilityServices
+    Map<Feasibility, List<TravelModeMatch>> results = feasibilityServices
         .stream()
         .map(svc -> {
           TimeDistance timeDistance = svc.determineTimeDistance(request);
           Feasibility feasibility = svc.determineFeasibility(timeDistance, request);
           TravelMode travelMode = svc.forTravelMode();
-          return new TravelModeMatch(timeDistance, feasibility, travelMode);
+          return new TravelModeMatch(travelMode, feasibility, timeDistance);
         })
-        .collect(groupingBy(TravelModeMatch::getTravelMode));
+        .collect(groupingBy(TravelModeMatch::getFeasibility));
     return results;
   }
 

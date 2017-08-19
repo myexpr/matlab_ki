@@ -23,13 +23,13 @@ public class DestinationTest {
   @Test
   public void shouldOnlyConcatenateCityCountryWhenCountryNotUS() {
     Destination destination = new Destination("FOO", "Bath", "Bucks", "GB", 0.0d, 0.0d);
-    assertEquals("Bath, GB", destination.name());
+    assertEquals("Bath,GB", destination.name());
   }
 
   @Test
   public void shouldConcatenateCityRegionCountryWhenCountryNotUS() {
     Destination destination = new Destination("FOO", "Cambridge", "MA", "US", 0.0d, 0.0d);
-    assertEquals("Cambridge, MA, US", destination.name());
+    assertEquals("Cambridge,MA,US", destination.name());
   }
 
 

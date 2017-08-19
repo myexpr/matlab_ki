@@ -27,6 +27,7 @@ public class RoadTravelFeasibilityTest {
 
   SearchRequest A_SEARCH_WITH_2_CHILDREN = new SearchRequest("343", LocalDate.now(),
       LocalDate.now().plusDays(2), new Room(2, 2), new User());
+  private int mpkm = 1000;
 
   @Test
   public void returnInfeasibleWhenInfeasibleRoute() {
@@ -37,14 +38,14 @@ public class RoadTravelFeasibilityTest {
 
   @Test
   public void returnPreferredWhenDistanceLessThan500() {
-    TimeDistance td = new TimeDistance(430, 7200);
+    TimeDistance td = new TimeDistance(430 * mpkm, 7200);
     SearchRequest searchRequest = null;
     assertEquals(PREFERRED, new RoadTravelFeasibility().determineFeasibility(td, searchRequest));
   }
 
   @Test
   public void returnStretchForDistanceBetween500_800_withNoChildren() {
-    TimeDistance td = new TimeDistance(600, 14400);
+    TimeDistance td = new TimeDistance(600 * mpkm, 14400);
     SearchRequest searchRequest = A_SEARCH_WITH_NO_CHILDREN;
     assertEquals(REASONABLE_STRETCH,
         new RoadTravelFeasibility().determineFeasibility(td, searchRequest));
@@ -52,21 +53,21 @@ public class RoadTravelFeasibilityTest {
 
   @Test
   public void returnStretchForDistanceBetween500_800_withChildren() {
-    TimeDistance td = new TimeDistance(600, 14400);
+    TimeDistance td = new TimeDistance(600 * mpkm, 14400);
     SearchRequest searchRequest = A_SEARCH_WITH_2_CHILDREN;
     assertEquals(DIFFICULT, new RoadTravelFeasibility().determineFeasibility(td, searchRequest));
   }
 
   @Test
   public void distancesGreaterThan800_WithNoChildren_AreDifficult() {
-    TimeDistance td = new TimeDistance(1200, 1456400);
+    TimeDistance td = new TimeDistance(1200 * mpkm, 1456400);
     SearchRequest searchRequest = A_SEARCH_WITH_NO_CHILDREN;
     assertEquals(DIFFICULT, new RoadTravelFeasibility().determineFeasibility(td, searchRequest));
   }
 
   @Test
   public void distancesGreaterThan800_WithChildren_IsInfeasible() {
-    TimeDistance td = new TimeDistance(1200, 1456400);
+    TimeDistance td = new TimeDistance(1200 * mpkm, 1456400);
     SearchRequest searchRequest = A_SEARCH_WITH_2_CHILDREN;
     assertEquals(INFEASIBLE, new RoadTravelFeasibility().determineFeasibility(td, searchRequest));
   }

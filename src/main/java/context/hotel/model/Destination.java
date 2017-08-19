@@ -104,9 +104,9 @@ public class Destination {
 
   public String name() {
     if (this.countryCode.equals("US")) {
-      return this.city + ", " + this.region + ", " + this.countryCode;
+      return this.city + "," + this.region + "," + this.countryCode;
     } else {
-      return this.city + ", " + this.countryCode;
+      return this.city + "," + this.countryCode;
     }
   }
 }

@@ -1,5 +1,7 @@
 package context.hotel.constraint.travelmode;
 
+import static context.hotel.model.Feasibility.*;
+
 import context.hotel.model.Feasibility;
 import context.hotel.model.InfeasibleRoute;
 import context.hotel.model.SearchRequest;
@@ -15,22 +17,22 @@ public class TrainTravelFeasibility extends RoadRailFeasibilityService {
 
   @Override
   public Feasibility determineFeasibility(TimeDistance timeDistance, SearchRequest request) {
-    Feasibility result = null;
-    int sph = 3600;
-    if ( timeDistance instanceof InfeasibleRoute) {
-      result = Feasibility.INFEASIBLE;
+    Feasibility result = INFEASIBLE;
+    int secondsPerHour = 3600;
+    if (timeDistance instanceof InfeasibleRoute) {
+      return INFEASIBLE;
     }
-    if ( timeDistance.getTime() < 2*sph ) {
-      result = Feasibility.DIFFICULT;
+    if (timeDistance.getTime() < 2 * secondsPerHour) {
+      return DIFFICULT;
     }
-    if ( timeDistance.getTime() >= 2*sph && timeDistance.getTime() < 4*sph) {
-      result = Feasibility.PREFERRED;
+    if (timeDistance.getTime() >= 2 * secondsPerHour && timeDistance.getTime() < 4 * secondsPerHour) {
+      return PREFERRED;
     }
-    if ( timeDistance.getTime() >= 4*sph && timeDistance.getTime() < 7*sph) {
-      result = Feasibility.REASONABLE_STRETCH;
+    if (timeDistance.getTime() >= 4 * secondsPerHour && timeDistance.getTime() < 7 * secondsPerHour) {
+      return REASONABLE_STRETCH;
     }
-    if ( timeDistance.getTime() > 7*sph) {
-      result = request.partyWithChildren() ? Feasibility.INFEASIBLE: Feasibility.DIFFICULT;
+    if (timeDistance.getTime() > 7 * secondsPerHour) {
+      return request.partyWithChildren() ? INFEASIBLE : DIFFICULT;
     }
     return result;
   }

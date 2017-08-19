@@ -3,12 +3,13 @@ package context.hotel.model;
 import java.util.Objects;
 
 public class TravelModeMatch {
+
   TimeDistance timeDistance;
   Feasibility feasibility;
   TravelMode travelMode;
 
-  public TravelModeMatch(TimeDistance timeDistance, Feasibility feasibility,
-      TravelMode travelMode) {
+  public TravelModeMatch(TravelMode travelMode, Feasibility feasibility,
+      TimeDistance timeDistance) {
     this.timeDistance = timeDistance;
     this.feasibility = feasibility;
     this.travelMode = travelMode;
@@ -47,10 +48,11 @@ public class TravelModeMatch {
 
   @Override
   public String toString() {
-    return "TravelModeMatch{" +
-        "timeDistance=" + timeDistance +
+    return "{" +
+        "mode=" + getTravelMode() +
+        ", time=" + timeDistance.getTime() +
+        ", distance=" + timeDistance.getDistance() +
         ", feasibility=" + feasibility +
-        ", travelMode=" + travelMode +
         '}';
   }
 }

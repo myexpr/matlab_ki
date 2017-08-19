@@ -30,7 +30,7 @@ public abstract class RoadRailFeasibilityService implements TravelModeFeasibilit
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("ORIGIN", origin);
     myParameters.put("DESTINATION", destination);
-    myParameters.put("API_KEY", "AIzaSyBtDyFsWO-XXXXXXXXXXX-qjjY4nHkk");
+    myParameters.put("API_KEY", "AIzaSyBtDyFsWO-XXXXXXXX-qjjY4nHkk");
     myParameters.put("MODE", apiTransitMode);
 
     String apiResponse = restTemplate.getForObject(API_END_POINT, String.class, myParameters);
@@ -38,11 +38,12 @@ public abstract class RoadRailFeasibilityService implements TravelModeFeasibilit
     String responseStatus = jsonResponse.get("status").asString();
 
     if ("OK".equals(responseStatus)) {
-      LOGGER.info("found feasible routes {} {} {}", origin, destination, apiTransitMode);
       JsonObject firstLeg = jsonResponse.get("routes").asArray().get(0).asObject()
           .get("legs").asArray().get(0).asObject();
       Integer distance = firstLeg.get("distance").asObject().get("value").asInt();
       Integer time = firstLeg.get("duration").asObject().get("value").asInt();
+      LOGGER.info("found feasible routes origin:{} dest:{} apimode:{} time:{} distance:{}", origin,
+          destination, apiTransitMode, time, distance);
       timeDistance = new TimeDistance(distance, time);
     } else {
       LOGGER.info("NO feasible routes {} {} {}", origin, destination, apiTransitMode);
