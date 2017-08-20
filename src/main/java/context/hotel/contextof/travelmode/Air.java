@@ -39,7 +39,7 @@ public class Air implements Travel {
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("LATITUDE", destination.getLatitude().toString());
     myParameters.put("LONGITUDE", destination.getLongitude().toString());
-    myParameters.put("API_KEY", "AIzaSyBtDyFsWO-XXXXXXXX-qjjY4nHkk");
+    myParameters.put("API_KEY", "AIzaSyBtDyFsWO--qjjY4nHkk");
 
     String apiResponse = restTemplate.getForObject(GOOGLE_PLACES_API, String.class, myParameters);
     JsonObject jsonResponse = parse(apiResponse).asObject();

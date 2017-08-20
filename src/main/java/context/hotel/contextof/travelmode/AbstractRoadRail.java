@@ -23,14 +23,19 @@ public abstract class AbstractRoadRail implements Travel {
   public TimeDistance determineTimeDistance(SearchRequest searchRequest) {
     RestTemplate restTemplate = new RestTemplate();
     TimeDistance timeDistance = null;
-    String origin = searchRequest.assumedUserOrigin();
     String destination = searchRequest.getResolvedDestination().name();
     String apiTransitMode = forTravelMode().apiTransitMode();
+    String origin = null;
+
+    if (searchRequest.assumedUserOrigin() == null) {
+      return new InfeasibleRoute();
+    }
+    origin = searchRequest.assumedUserOrigin();
 
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("ORIGIN", origin);
     myParameters.put("DESTINATION", destination);
-    myParameters.put("API_KEY", "AIzaSyBtDyFsWO-XXXXXXXX-qjjY4nHkk");
+    myParameters.put("API_KEY", "AIzaSyBtDyFsWO--qjjY4nHkk");
     myParameters.put("MODE", apiTransitMode);
 
     String apiResponse = restTemplate.getForObject(API_END_POINT, String.class, myParameters);

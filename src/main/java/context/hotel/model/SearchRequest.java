@@ -58,8 +58,11 @@ public class SearchRequest {
 
   public String assumedUserOrigin() {
     GeoCoordinate coordinate = user.getGeoCoordinate();
-    String result = format("%s,%s", coordinate.getLatitude(),
-        coordinate.getLongitude());
+    String result = null;
+    if (coordinate != null && coordinate.isValid()) {
+      result = format("%s,%s", coordinate.getLatitude(),
+          coordinate.getLongitude());
+    }
     return result;
   }
 

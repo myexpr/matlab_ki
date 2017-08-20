@@ -28,4 +28,8 @@ public class GeoCoordinate {
         ", longitude=" + longitude +
         '}';
   }
+
+  public boolean isValid() {
+    return latitude != null && longitude != null;
+  }
 }
