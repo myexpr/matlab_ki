@@ -16,6 +16,7 @@ import java.util.List;
 import org.apache.http.client.fluent.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,7 +25,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class FacebookIdentity {
 
-  private static final String ACCESS_TOKEN = "";
+  @Value("${secret.facebook}")
+  private String ACCESS_TOKEN;
+
   private static final String FB_URL = "https://graph.facebook.com/v2.10/me"; //?fields=%s&access_token=%s";
   private static final String FIELDS;
   private static final Logger LOGGER = LoggerFactory.getLogger(FacebookIdentity.class);
@@ -34,6 +37,7 @@ public class FacebookIdentity {
   }
 
   public LoggedUser retrieveUserDetails() throws IOException {
+    System.out.println(ACCESS_TOKEN);
     String facebookResponse = Request.Post(FB_URL)
         .bodyForm(form()
             .add("fields", FIELDS).add("access_token", ACCESS_TOKEN).add("limit", "50").build())

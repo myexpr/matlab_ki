@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,6 +31,9 @@ public class Air implements Travel {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Air.class);
 
+  @Value("${secret.google}")
+  private String API_KEY;
+
   @Override
   public TimeDistance determineTimeDistance(SearchRequest searchRequest) {
     RestTemplate restTemplate = new RestTemplate();
@@ -39,7 +43,7 @@ public class Air implements Travel {
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("LATITUDE", destination.getLatitude().toString());
     myParameters.put("LONGITUDE", destination.getLongitude().toString());
-    myParameters.put("API_KEY", "AIzaSyBtDyFsWO--qjjY4nHkk");
+    myParameters.put("API_KEY", API_KEY);
 
     String apiResponse = restTemplate.getForObject(GOOGLE_PLACES_API, String.class, myParameters);
     JsonObject jsonResponse = parse(apiResponse).asObject();

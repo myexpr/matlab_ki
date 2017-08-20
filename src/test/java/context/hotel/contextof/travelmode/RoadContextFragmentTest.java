@@ -81,7 +81,7 @@ public class RoadContextFragmentTest {
 
     Travel service = new Road();
     TimeDistance td = service.determineTimeDistance(searchRequest);
-
+    System.out.println(">>>>>" + td);
     assertTrue(td.getDistance() > 5000);
     assertTrue(td.getTime() > 7200);
   }
@@ -103,7 +103,8 @@ public class RoadContextFragmentTest {
   public void noFeasibleRoutesExistIfCustomerLocationNotKnown() {
     Destination destination = new Destination("22547", "Delhi", "", "IN", 28.6167, 77.2167);
     User aUser = new User();
-    SearchRequest searchRequest = new SearchRequest("22547", now(), now().plusDays(5), (Room) null, aUser);
+    SearchRequest searchRequest = new SearchRequest("22547", now(), now().plusDays(5), (Room) null,
+        aUser);
     searchRequest.setResolvedDestination(destination);
 
     Travel service = new Road();

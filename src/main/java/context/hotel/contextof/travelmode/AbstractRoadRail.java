@@ -35,7 +35,7 @@ public abstract class AbstractRoadRail implements Travel {
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("ORIGIN", origin);
     myParameters.put("DESTINATION", destination);
-    myParameters.put("API_KEY", "AIzaSyBtDyFsWO--qjjY4nHkk");
+    myParameters.put("API_KEY", ""); //works without one.
     myParameters.put("MODE", apiTransitMode);
 
     String apiResponse = restTemplate.getForObject(API_END_POINT, String.class, myParameters);
