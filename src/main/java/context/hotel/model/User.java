@@ -6,16 +6,30 @@ package context.hotel.model;
 public class User {
 
   GeoCoordinate geoCoordinate;
+  String accessToken;
+
+  public User() {
+  }
 
   public User(GeoCoordinate geoCoordinate) {
     this.geoCoordinate = geoCoordinate;
   }
 
-  public User() {
+  public User(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
+  public User(String accessToken, GeoCoordinate geoCoordinate) {
+    this.accessToken = accessToken;
+    this.geoCoordinate = geoCoordinate;
   }
 
   public GeoCoordinate getGeoCoordinate() {
     return geoCoordinate;
+  }
+
+  public String accessToken() {
+    return this.accessToken;
   }
 
   @Override

@@ -1,8 +1,11 @@
-package context.hotel.model;
+package context.hotel.model.response;
 
+import context.hotel.model.Feasibility;
+import context.hotel.model.TimeDistance;
+import context.hotel.model.TravelMode;
 import java.util.Objects;
 
-public class TravelModeMatch {
+public class TravelModeMatch implements ContextMatch {
 
   TimeDistance timeDistance;
   Feasibility feasibility;
@@ -19,8 +22,23 @@ public class TravelModeMatch {
     return timeDistance;
   }
 
+  @Override
+  public String getContextCategory() {
+    return "TravelContext";
+  }
+
+  @Override
+  public String getContextType() {
+    return this.travelMode.name();
+  }
+
   public Feasibility getFeasibility() {
-    return feasibility;
+    return this.feasibility;
+  }
+
+  @Override
+  public Object data() {
+    return getTimeDistance();
   }
 
   public TravelMode getTravelMode() {

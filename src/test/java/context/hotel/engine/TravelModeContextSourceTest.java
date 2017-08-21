@@ -15,12 +15,11 @@ import context.hotel.model.GeoCoordinate;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TravelMode;
-import context.hotel.model.TravelModeMatch;
 import context.hotel.model.User;
+import context.hotel.model.response.TravelModeMatch;
 import context.hotel.repository.DestinationRepository;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +32,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TravelModeContextServiceTest {
+public class TravelModeContextSourceTest {
 
   @Autowired
-  TravelModeContextService travelModeContextService;
+  TravelModeContextSource travelModeContextService;
 
   @Autowired
   DestinationRepository destinationRepository;
@@ -65,42 +64,41 @@ public class TravelModeContextServiceTest {
 
   @Test
   public void road_and_rail_should_be_Preferred_TravelMode_for_london_bath() {
-    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = travelModeContextService
-        .getFeasibleTravelModes(A_SEARCH_TO_BATH_FROM_LONDON_WITH_NO_CHILDREN);
+    List<TravelModeMatch> feasibleTravelModes = travelModeContextService
+        .deriveContext(A_SEARCH_TO_BATH_FROM_LONDON_WITH_NO_CHILDREN);
     List<TravelMode> expectedPreferredTravelModes = asList(ROAD, RAIL);
-    List<TravelMode> actualTravelModes = feasibleTravelModes
-        .get(PREFERRED)
-        .stream()
-        .map(TravelModeMatch::getTravelMode)
-        .collect(toList());
+    List<TravelMode> actualTravelModes = getTravelModesFromMatchesOfType(feasibleTravelModes,
+        PREFERRED);
     assertEquals(expectedPreferredTravelModes, actualTravelModes);
   }
 
   @Test
   public void rail_should_be_difficult_TravelMode_for_edinburgh_bath() {
-    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = travelModeContextService
-        .getFeasibleTravelModes(A_SEARCH_TO_BATH_FROM_EDINB_WITH_NO_CHILDREN);
+    List<TravelModeMatch> feasibleTravelModes = travelModeContextService
+        .deriveContext(A_SEARCH_TO_BATH_FROM_EDINB_WITH_NO_CHILDREN);
     List<TravelMode> expectedPreferredTravelModes = asList(RAIL);
-    List<TravelMode> actualTravelModes = feasibleTravelModes
-        .get(DIFFICULT)
-        .stream()
-        .map(TravelModeMatch::getTravelMode)
-        .collect(toList());
+    List<TravelMode> actualTravelModes = getTravelModesFromMatchesOfType(feasibleTravelModes,
+        DIFFICULT);
     assertEquals(expectedPreferredTravelModes, actualTravelModes);
   }
 
-
   @Test
   public void rail_road_should_be_infeasible_TravelMode_for_london_delhi() {
-    Map<Feasibility, List<TravelModeMatch>> feasibleTravelModes = travelModeContextService
-        .getFeasibleTravelModes(A_SEARCH_TO_DELHI_FROM_LONDON_WITH_NO_CHILDREN);
+    List<TravelModeMatch> feasibleTravelModes = travelModeContextService
+        .deriveContext(A_SEARCH_TO_DELHI_FROM_LONDON_WITH_NO_CHILDREN);
     System.out.println(feasibleTravelModes);
     List<TravelMode> expectedPreferredTravelModes = asList(ROAD, RAIL);
-    List<TravelMode> actualTravelModes = feasibleTravelModes
-        .get(INFEASIBLE)
+    List<TravelMode> actualTravelModes = getTravelModesFromMatchesOfType(feasibleTravelModes,
+        INFEASIBLE);
+    assertEquals(expectedPreferredTravelModes, actualTravelModes);
+  }
+
+  List<TravelMode> getTravelModesFromMatchesOfType(List<TravelModeMatch> feasibleTravelModes,
+      Feasibility feasibility) {
+    return feasibleTravelModes
         .stream()
+        .filter((TravelModeMatch t) -> t.getFeasibility().equals(feasibility))
         .map(TravelModeMatch::getTravelMode)
         .collect(toList());
-    assertEquals(expectedPreferredTravelModes, actualTravelModes);
   }
 }

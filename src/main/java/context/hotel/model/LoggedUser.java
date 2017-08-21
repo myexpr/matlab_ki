@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.groupingBy;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by araman on 20/08/2017.
@@ -52,7 +51,7 @@ public class LoggedUser {
     Map<String, Long> themeStatistics = visitedPlaces
         .stream()
         .flatMap((VisitedPlace t) -> t.getThemes().stream())
-        .collect(Collectors.groupingBy(String::toString, counting()));
+        .collect(groupingBy(String::toString, counting()));
     return themeStatistics;
   }
 

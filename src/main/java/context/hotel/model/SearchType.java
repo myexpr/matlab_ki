@@ -13,6 +13,7 @@ import static java.lang.Math.toIntExact;
 import static java.util.Arrays.asList;
 
 import context.hotel.contextof.occupancy.OccupancyConstraint;
+import context.hotel.model.response.SearchTypeMatch;
 import java.util.List;
 
 public enum SearchType {
@@ -53,11 +54,11 @@ public enum SearchType {
     return constraints.size() == countOfPassConstraints;
   }
 
-  public PartialMatch probabilisticEvaluation(SearchRequest request) {
+  public SearchTypeMatch probabilisticEvaluation(SearchRequest request) {
     long countOfPassConstraints = getCountOfPassConstraints(request);
     Integer probability = toIntExact(
         round((new Double(countOfPassConstraints) / new Double(constraints.size())) * 100));
-    return new PartialMatch(this, probability);
+    return new SearchTypeMatch(this, probability);
   }
 
   private long getCountOfPassConstraints(SearchRequest request) {

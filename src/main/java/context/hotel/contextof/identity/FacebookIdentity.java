@@ -36,11 +36,15 @@ public class FacebookIdentity {
     FIELDS = "name,email,location,tagged_places{place{name,location,place_topics}}";
   }
 
+  //todo: has to be removed when we have user access tokens
   public LoggedUser retrieveUserDetails() throws IOException {
-    System.out.println(ACCESS_TOKEN);
+    return this.retrieveUserDetails(ACCESS_TOKEN);
+  }
+
+  public LoggedUser retrieveUserDetails(String accessToken) throws IOException {
     String facebookResponse = Request.Post(FB_URL)
         .bodyForm(form()
-            .add("fields", FIELDS).add("access_token", ACCESS_TOKEN).add("limit", "50").build())
+            .add("fields", FIELDS).add("access_token", accessToken).add("limit", "50").build())
         .execute().returnContent().asString();
 
     JsonObject jsonResponse = Json.parse(facebookResponse).asObject();
@@ -73,8 +77,6 @@ public class FacebookIdentity {
     LoggedUser user = new LoggedUser(userName, userEmail, userLocation, visitedPlaces);
     LOGGER.debug("determined user details {}", new ObjectMapper().writeValueAsString(user));
 
-    System.out.println(user.countriesVisited());
-    System.out.println(user.themesPopular());
     return user;
   }
 

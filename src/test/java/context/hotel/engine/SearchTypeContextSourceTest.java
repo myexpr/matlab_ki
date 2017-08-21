@@ -10,7 +10,7 @@ import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
-import context.hotel.model.PartialMatch;
+import context.hotel.model.response.SearchTypeMatch;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.SearchType;
@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.junit.Test;
 
-public class SearchTypeContextServiceTest {
+public class SearchTypeContextSourceTest {
 
   private static final String A_DESTINATION = "FOO_BAR";
   private static final Room A_ROOM_FOR_ONE_ADULT = new Room(1, 0);
@@ -31,7 +31,7 @@ public class SearchTypeContextServiceTest {
 
   @Test
   public void evaluatedAsBusinessTrip() {
-    SearchTypeContextService engine = new SearchTypeContextService();
+    SearchTypeContextSource engine = new SearchTypeContextSource();
     SearchRequest request = new SearchRequest(A_DESTINATION, TOMORROW, DAY_AFTER_TOMORROW,
         asList(A_ROOM_FOR_ONE_ADULT), null);
     SearchType evaluatedType = engine.deterministicEvaluation(request);
@@ -40,7 +40,7 @@ public class SearchTypeContextServiceTest {
 
   @Test
   public void notABusinessTrip() {
-    SearchTypeContextService engine = new SearchTypeContextService();
+    SearchTypeContextSource engine = new SearchTypeContextSource();
     LocalDate nextMonthsFirstSaturday = LocalDate.now()
         .with(firstDayOfNextMonth())
         .with(firstInMonth(DayOfWeek.SATURDAY));
@@ -53,18 +53,18 @@ public class SearchTypeContextServiceTest {
 
   @Test
   public void multipleProbableMatches() {
-    SearchTypeContextService engine = new SearchTypeContextService();
+    SearchTypeContextSource engine = new SearchTypeContextSource();
     LocalDate firstFriday = now().with(firstDayOfNextMonth()).with(firstInMonth(DayOfWeek.FRIDAY));
     LocalDate followingSunday = firstFriday.plusDays(2);
     Room roomWithKids = new Room(2, 2);
     SearchRequest request = new SearchRequest("A_DESTINATION", firstFriday, followingSunday,
         roomWithKids, null);
 
-    List<PartialMatch> partialMatches = asList(
-        new PartialMatch(WEEKEND_GETAWAY_ADULTS, 75),
-        new PartialMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, 100),
-        new PartialMatch(VACATION_NUCLEAR_FAMILY, 75));
-    assertEquals(partialMatches, engine.deriveContext(request));
+    List<SearchTypeMatch> searchTypeMatches = asList(
+        new SearchTypeMatch(WEEKEND_GETAWAY_ADULTS, 75),
+        new SearchTypeMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, 100),
+        new SearchTypeMatch(VACATION_NUCLEAR_FAMILY, 75));
+    assertEquals(searchTypeMatches, engine.deriveContext(request));
   }
 
 

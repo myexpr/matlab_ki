@@ -1,9 +1,9 @@
 package context.hotel.controller;
 
 
-import context.hotel.engine.SearchTypeContextService;
+import context.hotel.engine.SearchTypeContextSource;
 import context.hotel.model.Destination;
-import context.hotel.model.PartialMatch;
+import context.hotel.model.response.SearchTypeMatch;
 import context.hotel.model.SearchRequest;
 import context.hotel.repository.DestinationRepository;
 import java.util.List;
@@ -20,20 +20,20 @@ public class SearchController {
   @Autowired
   DestinationRepository destinationRepository;
   @Autowired
-  SearchTypeContextService searchTypeContextService;
+  SearchTypeContextSource searchTypeContextService;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
 
   @RequestMapping(path = "/search", method = RequestMethod.POST)
-  public List<PartialMatch> searchForDestination(SearchRequest searchRequest) {
+  public List<SearchTypeMatch> searchForDestination(SearchRequest searchRequest) {
     LOGGER.debug("search request {}", searchRequest);
     Destination resolvedDestination = destinationRepository
         .findOne(searchRequest.getDestinationId());
     searchRequest.setResolvedDestination(resolvedDestination);
 
-    List<PartialMatch> partialMatches = searchTypeContextService.deriveContext(searchRequest);
+    List<SearchTypeMatch> searchTypeMatches = searchTypeContextService.deriveContext(searchRequest);
 
-    return partialMatches;
+    return searchTypeMatches;
   }
 
 

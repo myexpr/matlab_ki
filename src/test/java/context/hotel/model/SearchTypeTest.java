@@ -10,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import context.hotel.model.response.SearchTypeMatch;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import org.junit.Test;
@@ -29,9 +30,9 @@ public class SearchTypeTest {
     assertFalse(WEEKEND_GETAWAY_FAMILIES.evaluate(request));
     assertTrue(WEEKEND_GETAWAY_NUCLEAR_FAMILY.evaluate(request));
 
-    assertEquals(new PartialMatch(WEEKEND_GETAWAY_ADULTS, new Integer(75)),
+    assertEquals(new SearchTypeMatch(WEEKEND_GETAWAY_ADULTS, new Integer(75)),
         WEEKEND_GETAWAY_ADULTS.probabilisticEvaluation(request));
-    assertEquals(new PartialMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, new Integer(100)),
+    assertEquals(new SearchTypeMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, new Integer(100)),
         WEEKEND_GETAWAY_NUCLEAR_FAMILY.probabilisticEvaluation(request));
   }
 

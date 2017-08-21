@@ -3,14 +3,14 @@ package context.hotel.engine;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
-import context.hotel.model.PartialMatch;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.SearchType;
+import context.hotel.model.response.SearchTypeMatch;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SearchTypeContextService {
+public class SearchTypeContextSource implements ContextSource {
 
   public SearchType deterministicEvaluation(SearchRequest request) {
     SearchType matchedType = null;
@@ -24,8 +24,8 @@ public class SearchTypeContextService {
   }
 
 
-  public List<PartialMatch> deriveContext(SearchRequest request) {
-    List<PartialMatch> partialMatches = asList(SearchType.values())
+  public List<SearchTypeMatch> deriveContext(SearchRequest request) {
+    List<SearchTypeMatch> searchTypeMatches = asList(SearchType.values())
         .stream()
         .map(t -> {
           return t.probabilisticEvaluation(request);
@@ -34,6 +34,6 @@ public class SearchTypeContextService {
           return p.getMatchPercentage() > 70;
         })
         .collect(toList());
-    return partialMatches;
+    return searchTypeMatches;
   }
 }

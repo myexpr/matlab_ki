@@ -105,4 +105,5 @@ public class SearchRequest {
         ", resolvedDestination=" + resolvedDestination +
         '}';
   }
+
 }
