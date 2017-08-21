@@ -14,6 +14,7 @@ import context.hotel.model.response.SearchTypeMatch;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.SearchType;
+import context.hotel.source.SearchTypeContextSource;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;

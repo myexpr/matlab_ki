@@ -2,6 +2,7 @@ package context.hotel.engine;
 
 import context.hotel.model.SearchRequest;
 import context.hotel.model.response.ContextMatch;
+import context.hotel.source.ContextSource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

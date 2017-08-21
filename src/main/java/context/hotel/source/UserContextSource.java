@@ -1,4 +1,4 @@
-package context.hotel.engine;
+package context.hotel.source;
 
 import static java.util.Arrays.asList;
 

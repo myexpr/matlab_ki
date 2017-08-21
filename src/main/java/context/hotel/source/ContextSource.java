@@ -1,4 +1,4 @@
-package context.hotel.engine;
+package context.hotel.source;
 
 import context.hotel.model.SearchRequest;
 import context.hotel.model.response.ContextMatch;

@@ -1,12 +1,13 @@
 package context.hotel.controller;
 
 
-import context.hotel.engine.SearchTypeContextSource;
+import context.hotel.engine.ContextEngine;
 import context.hotel.model.Destination;
-import context.hotel.model.response.SearchTypeMatch;
 import context.hotel.model.SearchRequest;
+import context.hotel.model.response.ContextMatch;
 import context.hotel.repository.DestinationRepository;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,19 @@ public class SearchController {
   @Autowired
   DestinationRepository destinationRepository;
   @Autowired
-  SearchTypeContextSource searchTypeContextService;
+  ContextEngine engine;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
 
   @RequestMapping(path = "/search", method = RequestMethod.POST)
-  public List<SearchTypeMatch> searchForDestination(SearchRequest searchRequest) {
+  public Map<String, ? extends List<? extends ContextMatch>> searchForDestination(
+      SearchRequest searchRequest) {
     LOGGER.debug("search request {}", searchRequest);
     Destination resolvedDestination = destinationRepository
         .findOne(searchRequest.getDestinationId());
     searchRequest.setResolvedDestination(resolvedDestination);
 
-    List<SearchTypeMatch> searchTypeMatches = searchTypeContextService.deriveContext(searchRequest);
-
-    return searchTypeMatches;
+    return engine.process(searchRequest);
   }
 
 

@@ -1,4 +1,4 @@
-package context.hotel.engine;
+package context.hotel.source;
 
 import context.hotel.contextof.travelmode.Travel;
 import context.hotel.model.Feasibility;
