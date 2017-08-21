@@ -37,4 +37,12 @@ public class LoggedUserMatch implements ContextMatch {
   public Object data() {
     return this.dataCount;
   }
+
+  @Override
+  public String toString() {
+    return "LoggedUserMatch{" +
+        "contextType='" + contextType + '\'' +
+        ", dataCount=" + dataCount +
+        '}';
+  }
 }
