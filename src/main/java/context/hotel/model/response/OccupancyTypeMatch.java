@@ -54,7 +54,7 @@ public class OccupancyTypeMatch implements ContextMatch {
 
   @Override
   public String getContextCategory() {
-    return "SearchContext";
+    return "OccupancyContext";
   }
 
   @Override
