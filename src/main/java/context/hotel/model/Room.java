@@ -5,6 +5,9 @@ public class Room {
   Integer adults;
   Integer children;
 
+  public Room() {
+  }
+
   public Room(Integer adults, Integer children) {
     this.adults = adults;
     this.children = children;
@@ -26,6 +29,13 @@ public class Room {
     return adults >= 1 && children >= 1;
   }
 
+  public void setAdults(Integer adults) {
+    this.adults = adults;
+  }
+
+  public void setChildren(Integer children) {
+    this.children = children;
+  }
   @Override
   public String toString() {
     return "Room{" +

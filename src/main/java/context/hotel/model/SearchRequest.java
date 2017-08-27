@@ -16,6 +16,9 @@ public class SearchRequest {
   User user;
   Destination resolvedDestination;
 
+  public SearchRequest() {
+  }
+
   public SearchRequest(String destinationId, LocalDate fromDate, LocalDate toDate,
       List<Room> rooms, User user) {
     super();
@@ -92,6 +95,26 @@ public class SearchRequest {
 
   public void setResolvedDestination(Destination resolvedDestination) {
     this.resolvedDestination = resolvedDestination;
+  }
+
+  public void setDestinationId(String destinationId) {
+    this.destinationId = destinationId;
+  }
+
+  public void setFromDate(LocalDate fromDate) {
+    this.fromDate = fromDate;
+  }
+
+  public void setToDate(LocalDate toDate) {
+    this.toDate = toDate;
+  }
+
+  public void setRooms(List<Room> rooms) {
+    this.rooms = rooms;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 
   @Override
