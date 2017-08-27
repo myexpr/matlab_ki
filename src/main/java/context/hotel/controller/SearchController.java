@@ -37,5 +37,12 @@ public class SearchController {
     return engine.process(searchRequest);
   }
 
+  @RequestMapping(path = "/searchaslist", method = RequestMethod.POST)
+  public List<? extends ContextMatch> searchB(@RequestBody SearchRequest searchRequest) {
+    LOGGER.debug("search request {}", searchRequest);
+    Destination resolvedDestination = destinationRepository.findOne(searchRequest.getDestinationId());
+    searchRequest.setResolvedDestination(resolvedDestination);
+    return engine.processAsList(searchRequest);
+  }
 
 }

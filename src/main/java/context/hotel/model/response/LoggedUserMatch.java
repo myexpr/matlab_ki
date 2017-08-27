@@ -11,11 +11,11 @@ import java.util.Map;
 public class LoggedUserMatch implements ContextMatch {
 
   private final String contextType;
-  private final Map<String, Long> dataCount;
+  private final Map<String, Long> data;
 
   public LoggedUserMatch(String type, Map<String, Long> data) {
     this.contextType = type;
-    this.dataCount = data;
+    this.data = data;
   }
 
   @Override
@@ -34,15 +34,15 @@ public class LoggedUserMatch implements ContextMatch {
   }
 
   @Override
-  public Object data() {
-    return this.dataCount;
+  public Object getData() {
+    return this.data;
   }
 
   @Override
   public String toString() {
     return "LoggedUserMatch{" +
         "contextType='" + contextType + '\'' +
-        ", dataCount=" + dataCount +
+        ", data=" + data +
         '}';
   }
 }

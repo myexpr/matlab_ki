@@ -37,7 +37,7 @@ public class TravelModeMatch implements ContextMatch {
   }
 
   @Override
-  public Object data() {
+  public Object getData() {
     return getTimeDistance();
   }
 

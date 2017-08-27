@@ -10,6 +10,6 @@ public interface ContextMatch {
   public String getContextCategory();
   public String getContextType();
   public Feasibility getFeasibility();
-  public Object data();
+  public Object getData();
 
 }

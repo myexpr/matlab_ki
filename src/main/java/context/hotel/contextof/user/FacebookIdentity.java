@@ -76,7 +76,8 @@ public class FacebookIdentity {
 
     LoggedUser user = new LoggedUser(userName, userEmail, userLocation, visitedPlaces);
     LOGGER.debug("determined user details {}", new ObjectMapper().writeValueAsString(user));
-
+    LOGGER.debug("user countries {}", user.countriesVisited());
+    LOGGER.debug("user themes {}", user.themesPopular());
     return user;
   }
 

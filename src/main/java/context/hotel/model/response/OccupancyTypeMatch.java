@@ -77,7 +77,7 @@ public class OccupancyTypeMatch implements ContextMatch {
   }
 
   @Override
-  public Object data() {
+  public Object getData() {
     return this.matchPercentage;
   }
 }

@@ -27,5 +27,14 @@ public class ContextEngine {
     return collectedContext;
   }
 
+  public List<? extends ContextMatch> processAsList(SearchRequest request) {
+    List<? extends ContextMatch> collectedContext = contextSources
+        .stream()
+        .flatMap(s -> s.deriveContext(request).stream())
+        .collect(Collectors.toList());
+
+    return collectedContext;
+  }
+
 
 }
