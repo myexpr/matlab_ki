@@ -5,25 +5,25 @@ import static context.hotel.model.Feasibility.*;
 import static context.hotel.model.Feasibility.INFEASIBLE;
 
 import context.hotel.model.Feasibility;
-import context.hotel.model.SearchType;
+import context.hotel.model.OccupancyType;
 import java.util.Objects;
 
-public class SearchTypeMatch implements ContextMatch {
+public class OccupancyTypeMatch implements ContextMatch {
 
   Integer matchPercentage;
-  SearchType searchType;
+  OccupancyType occupancyType;
 
-  public SearchTypeMatch(SearchType searchType, Integer matchPercentage) {
+  public OccupancyTypeMatch(OccupancyType occupancyType, Integer matchPercentage) {
     this.matchPercentage = matchPercentage;
-    this.searchType = searchType;
+    this.occupancyType = occupancyType;
   }
 
   public Integer getMatchPercentage() {
     return matchPercentage;
   }
 
-  public SearchType getSearchType() {
-    return searchType;
+  public OccupancyType getOccupancyType() {
+    return occupancyType;
   }
 
   @Override
@@ -34,20 +34,20 @@ public class SearchTypeMatch implements ContextMatch {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchTypeMatch that = (SearchTypeMatch) o;
+    OccupancyTypeMatch that = (OccupancyTypeMatch) o;
     return Objects.equals(matchPercentage, that.matchPercentage) &&
-        searchType == that.searchType;
+        occupancyType == that.occupancyType;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(matchPercentage, searchType);
+    return Objects.hash(matchPercentage, occupancyType);
   }
 
   @Override
   public String toString() {
-    return "SearchTypeMatch{" +
-        "searchType=" + searchType +
+    return "OccupancyTypeMatch{" +
+        "occupancyType=" + occupancyType +
         ", matchPercentage=" + matchPercentage +
         '}';
   }
@@ -59,7 +59,7 @@ public class SearchTypeMatch implements ContextMatch {
 
   @Override
   public String getContextType() {
-    return this.searchType.name();
+    return this.occupancyType.name();
   }
 
   @Override

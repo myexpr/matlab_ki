@@ -2,7 +2,7 @@ package context.hotel.source;
 
 import static java.util.Arrays.asList;
 
-import context.hotel.contextof.identity.FacebookIdentity;
+import context.hotel.contextof.user.FacebookIdentity;
 import context.hotel.model.LoggedUser;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.response.LoggedUserMatch;

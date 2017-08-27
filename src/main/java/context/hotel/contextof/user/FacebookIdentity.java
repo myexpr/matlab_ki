@@ -1,4 +1,4 @@
-package context.hotel.contextof.identity;
+package context.hotel.contextof.user;
 
 import static java.util.Optional.ofNullable;
 import static org.apache.http.client.fluent.Form.form;

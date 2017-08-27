@@ -1,8 +1,8 @@
 package context.hotel.model;
 
-import static context.hotel.model.SearchType.WEEKEND_GETAWAY_ADULTS;
-import static context.hotel.model.SearchType.WEEKEND_GETAWAY_FAMILIES;
-import static context.hotel.model.SearchType.WEEKEND_GETAWAY_NUCLEAR_FAMILY;
+import static context.hotel.model.OccupancyType.WEEKEND_GETAWAY_ADULTS;
+import static context.hotel.model.OccupancyType.WEEKEND_GETAWAY_FAMILIES;
+import static context.hotel.model.OccupancyType.WEEKEND_GETAWAY_NUCLEAR_FAMILY;
 import static java.time.LocalDate.now;
 import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
@@ -10,13 +10,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import context.hotel.model.response.SearchTypeMatch;
+import context.hotel.model.response.OccupancyTypeMatch;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import org.junit.Test;
 
 
-public class SearchTypeTest {
+public class OccupancyTypeTest {
 
   @Test
   public void testProbabilisticMatchToMultipleSearchTypes() {
@@ -30,9 +30,9 @@ public class SearchTypeTest {
     assertFalse(WEEKEND_GETAWAY_FAMILIES.evaluate(request));
     assertTrue(WEEKEND_GETAWAY_NUCLEAR_FAMILY.evaluate(request));
 
-    assertEquals(new SearchTypeMatch(WEEKEND_GETAWAY_ADULTS, new Integer(75)),
+    assertEquals(new OccupancyTypeMatch(WEEKEND_GETAWAY_ADULTS, new Integer(75)),
         WEEKEND_GETAWAY_ADULTS.probabilisticEvaluation(request));
-    assertEquals(new SearchTypeMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, new Integer(100)),
+    assertEquals(new OccupancyTypeMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, new Integer(100)),
         WEEKEND_GETAWAY_NUCLEAR_FAMILY.probabilisticEvaluation(request));
   }
 

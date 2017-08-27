@@ -1,4 +1,4 @@
-package context.hotel.contextof.identity;
+package context.hotel.contextof.user;
 
 import java.io.IOException;
 import org.junit.Test;
