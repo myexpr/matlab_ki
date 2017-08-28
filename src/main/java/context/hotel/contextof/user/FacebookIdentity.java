@@ -7,7 +7,6 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import context.hotel.model.LoggedUser;
 import context.hotel.model.VisitedPlace;
 import java.io.IOException;
@@ -41,11 +40,18 @@ public class FacebookIdentity {
     return this.retrieveUserDetails(ACCESS_TOKEN);
   }
 
-  public LoggedUser retrieveUserDetails(String accessToken) throws IOException {
-    String facebookResponse = Request.Post(FB_URL)
-        .bodyForm(form()
-            .add("fields", FIELDS).add("access_token", accessToken).add("limit", "50").build())
-        .execute().returnContent().asString();
+  public LoggedUser retrieveUserDetails(String accessToken) {
+    String facebookResponse = null;
+    try {
+      facebookResponse = Request.Post(FB_URL)
+          .bodyForm(form()
+              .add("fields", FIELDS).add("access_token", accessToken).add("limit", "50").build())
+          .execute().returnContent().asString();
+    } catch (IOException e) {
+      LOGGER.error("returning null since IOException occured while communicating with FB for {} {}",
+          accessToken, e);
+      return null;
+    }
 
     JsonObject jsonResponse = Json.parse(facebookResponse).asObject();
 
@@ -75,9 +81,9 @@ public class FacebookIdentity {
     });
 
     LoggedUser user = new LoggedUser(userName, userEmail, userLocation, visitedPlaces);
-    LOGGER.debug("determined user details {}", new ObjectMapper().writeValueAsString(user));
-    LOGGER.debug("user countries {}", user.countriesVisited());
-    LOGGER.debug("user themes {}", user.themesPopular());
+//    LOGGER.debug("determined user details {}", new ObjectMapper().writeValueAsString(user));
+//    LOGGER.debug("user countries {}", user.countriesVisited());
+//    LOGGER.debug("user themes {}", user.themesPopular());
     return user;
   }
 

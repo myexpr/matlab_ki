@@ -8,6 +8,9 @@ public class User {
   GeoCoordinate geoCoordinate;
   String accessToken;
 
+  public User() {
+  }
+
   public User(GeoCoordinate geoCoordinate) {
     this.geoCoordinate = geoCoordinate;
   }
@@ -21,9 +24,6 @@ public class User {
     this.geoCoordinate = geoCoordinate;
   }
 
-  public User() {
-  }
-
   public GeoCoordinate getGeoCoordinate() {
     return geoCoordinate;
   }
@@ -32,11 +32,23 @@ public class User {
     return accessToken;
   }
 
+  public void setGeoCoordinate(GeoCoordinate geoCoordinate) {
+    this.geoCoordinate = geoCoordinate;
+  }
+
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
   @Override
   public String toString() {
     return "User{" +
         "geoCoordinate=" + geoCoordinate +
         ", accessToken='" + accessToken + '\'' +
         '}';
+  }
+
+  public boolean hasAccessToken() {
+    return accessToken != null && accessToken.length() > 0;
   }
 }

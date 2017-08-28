@@ -1,8 +1,10 @@
 package context.hotel.controller;
 
 
+import context.hotel.contextof.user.FacebookIdentity;
 import context.hotel.engine.ContextEngine;
 import context.hotel.model.Destination;
+import context.hotel.model.LoggedUser;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.response.ContextMatch;
 import context.hotel.repository.DestinationRepository;
@@ -22,27 +24,27 @@ public class SearchController {
   @Autowired
   DestinationRepository destinationRepository;
   @Autowired
+  FacebookIdentity facebookIdentity;
+  @Autowired
   ContextEngine engine;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
 
   @RequestMapping(path = "/search", method = RequestMethod.POST)
-  public Map<String, ? extends List<? extends ContextMatch>> searchForDestination(
-      @RequestBody SearchRequest searchRequest) {
-    LOGGER.debug("search request {}", searchRequest);
-    Destination resolvedDestination = destinationRepository
-        .findOne(searchRequest.getDestinationId());
-    searchRequest.setResolvedDestination(resolvedDestination);
+  public Map<String, ? extends List<? extends ContextMatch>> searchForDestination(@RequestBody
+      SearchRequest searchRequest) {
 
-    return engine.process(searchRequest);
-  }
-
-  @RequestMapping(path = "/searchaslist", method = RequestMethod.POST)
-  public List<? extends ContextMatch> searchB(@RequestBody SearchRequest searchRequest) {
-    LOGGER.debug("search request {}", searchRequest);
     Destination resolvedDestination = destinationRepository.findOne(searchRequest.getDestinationId());
     searchRequest.setResolvedDestination(resolvedDestination);
-    return engine.processAsList(searchRequest);
+
+    if ( searchRequest.getUser().hasAccessToken() ) {
+      LoggedUser loggedUser = facebookIdentity
+          .retrieveUserDetails(searchRequest.getUser().getAccessToken());
+      searchRequest.setResolvedUser(loggedUser);
+    }
+    LOGGER.debug("search request {}", searchRequest);
+
+    return engine.process(searchRequest);
   }
 
 }

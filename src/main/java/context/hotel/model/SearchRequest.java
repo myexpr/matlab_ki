@@ -15,6 +15,7 @@ public class SearchRequest {
   List<Room> rooms;
   User user;
   Destination resolvedDestination;
+  LoggedUser resolvedUser;
 
   public SearchRequest() {
   }
@@ -62,12 +63,17 @@ public class SearchRequest {
   public String assumedUserOrigin() {
     GeoCoordinate coordinate = user.getGeoCoordinate();
     String result = null;
+    if (user.getAccessToken() != null && this.getResolvedUser() != null
+        && this.getResolvedUser().getLocation() != null) {
+      return this.getResolvedUser().getLocation();
+    }
     if (coordinate != null && coordinate.isValid()) {
-      result = format("%s,%s", coordinate.getLatitude(),
+      return format("%s,%s", coordinate.getLatitude(),
           coordinate.getLongitude());
     }
     return result;
   }
+
 
   public LocalDate getFromDate() {
     return fromDate;
@@ -95,6 +101,14 @@ public class SearchRequest {
 
   public void setResolvedDestination(Destination resolvedDestination) {
     this.resolvedDestination = resolvedDestination;
+  }
+
+  public void setResolvedUser(LoggedUser resolvedUser) {
+    this.resolvedUser = resolvedUser;
+  }
+
+  public LoggedUser getResolvedUser() {
+    return resolvedUser;
   }
 
   public void setDestinationId(String destinationId) {
@@ -128,5 +142,6 @@ public class SearchRequest {
         ", resolvedDestination=" + resolvedDestination +
         '}';
   }
+
 
 }
