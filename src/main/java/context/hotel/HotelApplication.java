@@ -10,18 +10,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 public class HotelApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(HotelApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(HotelApplication.class, args);
+  }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/search").allowedOrigins("http://localhost:8081, http://54.145.202.206:8080");
-            }
-        };
-    }
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/search")
+            .allowedOrigins("http://localhost:8081, http://54.145.202.206:8080");
+      }
+    };
+  }
 }
