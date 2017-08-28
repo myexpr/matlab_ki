@@ -18,6 +18,8 @@ public class SearchRequest {
   LoggedUser resolvedUser;
 
   public SearchRequest() {
+    this.user = new NullSafeUser();
+    this.rooms = asList(new NullSafeRoom());
   }
 
   public SearchRequest(String destinationId, LocalDate fromDate, LocalDate toDate,

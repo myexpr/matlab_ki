@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import context.hotel.model.Destination;
 import context.hotel.model.GeoCoordinate;
+import context.hotel.model.NullSafeLoggedUser;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.User;
@@ -80,6 +81,7 @@ public class ContextEngineTest {
         LocalDate.now().plusDays(10), new Room(2, 0), new User(accessToken));
     Destination delhi = destinationRepository.findOne("25833");
     anIdenticalRequest.setResolvedDestination(delhi);
+    anIdenticalRequest.setResolvedUser(new NullSafeLoggedUser());
     Map<String, ? extends List<? extends ContextMatch>> process = contextEngine
         .process(anIdenticalRequest);
     asJson(anIdenticalRequest, process);

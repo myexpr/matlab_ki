@@ -11,6 +11,11 @@ public class User {
   public User() {
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   public User(GeoCoordinate geoCoordinate) {
     this.geoCoordinate = geoCoordinate;
   }

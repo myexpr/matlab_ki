@@ -6,6 +6,7 @@ import context.hotel.contextof.user.FacebookIdentity;
 import context.hotel.model.LoggedUser;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.response.LoggedUserMatch;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,13 @@ public class UserContextSource implements ContextSource {
 
   public List<LoggedUserMatch> deriveContext(SearchRequest searchRequest) {
     LoggedUser loggedUser = null;
-    loggedUser = facebookIdentity.retrieveUserDetails(searchRequest.getUser().getAccessToken());
-
-    List<LoggedUserMatch> loggedUserMatches = asList(
-            new LoggedUserMatch("CountriesVisited", loggedUser.countriesVisited()),
-            new LoggedUserMatch("ThemesPopular", loggedUser.themesPopular()));
-
+    List<LoggedUserMatch> loggedUserMatches = new ArrayList<>();
+    if (searchRequest.getUser().hasAccessToken()) {
+      loggedUser = searchRequest.getResolvedUser();
+      loggedUserMatches = asList(
+          new LoggedUserMatch("CountriesVisited", loggedUser.countriesVisited()),
+          new LoggedUserMatch("ThemesPopular", loggedUser.themesPopular()));
+    }
     return loggedUserMatches;
   }
 

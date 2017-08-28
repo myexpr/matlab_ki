@@ -8,6 +8,7 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import context.hotel.model.LoggedUser;
+import context.hotel.model.NullSafeLoggedUser;
 import context.hotel.model.VisitedPlace;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import java.util.List;
 import org.apache.http.client.fluent.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,20 +24,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class FacebookIdentity {
 
-  @Value("${secret.facebook}")
-  private String ACCESS_TOKEN;
-
   private static final String FB_URL = "https://graph.facebook.com/v2.10/me"; //?fields=%s&access_token=%s";
   private static final String FIELDS;
   private static final Logger LOGGER = LoggerFactory.getLogger(FacebookIdentity.class);
 
   static {
     FIELDS = "name,email,location,tagged_places{place{name,location,place_topics}}";
-  }
-
-  //todo: has to be removed when we have user access tokens
-  public LoggedUser retrieveUserDetails() throws IOException {
-    return this.retrieveUserDetails(ACCESS_TOKEN);
   }
 
   public LoggedUser retrieveUserDetails(String accessToken) {
@@ -50,7 +42,7 @@ public class FacebookIdentity {
     } catch (IOException e) {
       LOGGER.error("returning null since IOException occured while communicating with FB for {} {}",
           accessToken, e);
-      return null;
+      return new NullSafeLoggedUser();
     }
 
     JsonObject jsonResponse = Json.parse(facebookResponse).asObject();
@@ -80,11 +72,10 @@ public class FacebookIdentity {
       visitedPlaces.add(new VisitedPlace(placeName, placeCity, placeCountry, placeThemes));
     });
 
-    LoggedUser user = new LoggedUser(userName, userEmail, userLocation, visitedPlaces);
-//    LOGGER.debug("determined user details {}", new ObjectMapper().writeValueAsString(user));
-//    LOGGER.debug("user countries {}", user.countriesVisited());
-//    LOGGER.debug("user themes {}", user.themesPopular());
-    return user;
+    LoggedUser loggedUser = new LoggedUser(userName, userEmail, userLocation, visitedPlaces);
+    LOGGER.debug("determined user details {}", loggedUser);
+
+    return loggedUser;
   }
 
   JsonArray safeGetArrayFrom(JsonValue object, String field) {
