@@ -1,6 +1,8 @@
 package context.hotel.controller;
 
 
+import static java.util.stream.Collectors.toMap;
+
 import context.hotel.contextof.user.FacebookIdentity;
 import context.hotel.engine.ContextEngine;
 import context.hotel.model.Destination;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,10 +37,11 @@ public class SearchController {
   public Map<String, ? extends List<? extends ContextMatch>> searchForDestination(@RequestBody
       SearchRequest searchRequest) {
 
-    Destination resolvedDestination = destinationRepository.findOne(searchRequest.getDestinationId());
+    Destination resolvedDestination = destinationRepository
+        .findOne(searchRequest.getDestinationId());
     searchRequest.setResolvedDestination(resolvedDestination);
 
-    if ( searchRequest.getUser().hasAccessToken() ) {
+    if (searchRequest.getUser().hasAccessToken()) {
       LoggedUser loggedUser = facebookIdentity
           .retrieveUserDetails(searchRequest.getUser().getAccessToken());
       searchRequest.setResolvedUser(loggedUser);
@@ -45,6 +49,16 @@ public class SearchController {
     LOGGER.debug("search request {}", searchRequest);
 
     return engine.process(searchRequest);
+  }
+
+  @RequestMapping(path = "/type", method = RequestMethod.GET)
+  public Map<String, String> findCities(@RequestParam String q) {
+    List<Destination> destinations = destinationRepository.findByCityStartingWithIgnoreCase(q);
+
+    Map<String, String> mappedDestinations = destinations.stream().collect(
+        toMap(Destination::getDestinationId, Destination::name));
+
+    return mappedDestinations;
   }
 
 }
