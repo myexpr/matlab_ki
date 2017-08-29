@@ -67,7 +67,8 @@ public class SearchRequest {
     String result = null;
     if (user.getAccessToken() != null && !(this.getResolvedUser() instanceof NullSafeLoggedUser) &&
         this.getResolvedUser() != null
-        && this.getResolvedUser().getLocation() != null) {
+        && this.getResolvedUser().getLocation() != null
+        && this.getResolvedUser().getLocation().length() > 0) {
       return this.getResolvedUser().getLocation();
     }
     if (coordinate != null && coordinate.isValid()) {
