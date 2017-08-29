@@ -65,7 +65,8 @@ public class SearchRequest {
   public String assumedUserOrigin() {
     GeoCoordinate coordinate = user.getGeoCoordinate();
     String result = null;
-    if (user.getAccessToken() != null && this.getResolvedUser() != null
+    if (user.getAccessToken() != null && !(this.getResolvedUser() instanceof NullSafeLoggedUser) &&
+        this.getResolvedUser() != null
         && this.getResolvedUser().getLocation() != null) {
       return this.getResolvedUser().getLocation();
     }
@@ -142,8 +143,7 @@ public class SearchRequest {
         ", rooms=" + rooms +
         ", user=" + user +
         ", resolvedDestination=" + resolvedDestination +
+        ", resolvedUser=" + resolvedUser +
         '}';
   }
-
-
 }

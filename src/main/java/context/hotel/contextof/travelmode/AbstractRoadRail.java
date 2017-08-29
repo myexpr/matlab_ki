@@ -31,7 +31,8 @@ public abstract class AbstractRoadRail implements Travel {
       return new InfeasibleRoute();
     }
     origin = searchRequest.assumedUserOrigin();
-
+    LOGGER.debug("finding feasible routes origin:{} dest:{} apimode:{} ", origin,
+        destination, apiTransitMode);
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("ORIGIN", origin);
     myParameters.put("DESTINATION", destination);
