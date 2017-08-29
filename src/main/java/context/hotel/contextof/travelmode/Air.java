@@ -54,7 +54,7 @@ public class Air implements Travel {
       JsonObject location = firstResult.get("geometry").asObject().get("location").asObject();
       String airportName = firstResult.get("name").asString();
       LOGGER.info("airport {} located within 100 km of destination {}", airportName, destination);
-      return new TimeDistance(100, 3 * 3600);
+      return new TimeDistance(100 * 1000, 3 * 3600);
     } else {
       return new InfeasibleRoute();
     }

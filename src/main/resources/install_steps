@@ -1,0 +1,12 @@
+sudo curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+sudo yum install nodejs --enablerepo=nodesource
+sudo npm install webpack
+sudo yum install git java-1.8.0-openjdk-devel
+sudo yum remove java-1.7.0-openjdk
+
+http://www.h2database.com/h2-2017-06-10.zip
+unzip h2-2017-06-10.zip
+
+
+java -cp h2-1.4.196.jar org.h2.tools.Shell
+create table destination as select * from csvread('/home/ec2-user/matlab_ki/src/main/resources/filtered_destination_2.csv');
