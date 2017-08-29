@@ -8,5 +8,5 @@ public interface DestinationRepository extends CrudRepository<Destination, Strin
 
   List<Destination> findByCity(String city);
 
-  List<Destination> findByCityStartingWithIgnoreCase(String query);
+  List<Destination> findTop10ByCityStartingWithIgnoreCaseOrderByCityAsc(String query);
 }

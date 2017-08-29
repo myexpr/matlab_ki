@@ -52,13 +52,13 @@ public class SearchController {
   }
 
   @RequestMapping(path = "/type", method = RequestMethod.GET)
-  public Map<String, String> findCities(@RequestParam String q) {
-    List<Destination> destinations = destinationRepository.findByCityStartingWithIgnoreCase(q);
+  public List<Destination> findCities(@RequestParam String q) {
+    List<Destination> destinations = destinationRepository.findTop10ByCityStartingWithIgnoreCaseOrderByCityAsc(q);
 
     Map<String, String> mappedDestinations = destinations.stream().collect(
         toMap(Destination::getDestinationId, Destination::name));
 
-    return mappedDestinations;
+    return destinations;
   }
 
 }
