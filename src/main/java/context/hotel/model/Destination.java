@@ -109,4 +109,8 @@ public class Destination {
       return this.city + "," + this.countryCode;
     }
   }
+
+  public GeoCoordinate getGeoCoordinate() {
+    return new GeoCoordinate(this.getLatitude(), this.getLongitude());
+  }
 }

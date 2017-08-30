@@ -5,7 +5,9 @@ package context.hotel.model;
  */
 public enum Feasibility {
   PREFERRED,
+  PROBABLE,
   REASONABLE_STRETCH,
   DIFFICULT,
-  INFEASIBLE, PROBABLE, UNKNOWN;
+  INFEASIBLE,
+  UNKNOWN;
 }

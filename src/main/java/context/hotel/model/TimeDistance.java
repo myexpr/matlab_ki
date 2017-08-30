@@ -13,6 +13,10 @@ public class TimeDistance {
     this.time = time;
   }
 
+  public TimeDistance(Double doubleDistance, int time) {
+    this(doubleDistance.intValue(), time);
+  }
+
   public Integer getDistance() {
     return distance;
   }
