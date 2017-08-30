@@ -1,63 +1,100 @@
 package context.hotel.contextof.travelmode;
 
-import static com.eclipsesource.json.Json.parse;
+import static context.hotel.model.Feasibility.DIFFICULT;
+import static context.hotel.model.Feasibility.INFEASIBLE;
+import static context.hotel.model.Feasibility.PREFERRED;
+import static context.hotel.model.Feasibility.PROBABLE;
+import static context.hotel.model.Feasibility.REASONABLE_STRETCH;
 import static context.hotel.model.TravelMode.AIR;
 
-import com.eclipsesource.json.JsonObject;
+import context.hotel.model.Airport;
 import context.hotel.model.Destination;
-import context.hotel.model.InfeasibleRoute;
+import context.hotel.model.Feasibility;
+import context.hotel.model.GeoCoordinate;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
 import context.hotel.model.TravelMode;
 import context.hotel.model.response.TravelModeMatch;
-import java.util.HashMap;
-import java.util.Map;
+import context.hotel.repository.AirportRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * Created by araman on 19/08/2017.
+ * Created by araman on 30/08/2017.
  */
-public class Air {
-
-  private static final String GOOGLE_PLACES_API =
-      "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={LATITUDE},{LONGITUDE}&radius=100000&type=airport&key={API_KEY}";
+@Component
+public class Air implements Travel {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Air.class);
 
-  private String API_KEY;
+  @Autowired
+  AirportRepository airportRepository;
+  List<Airport> allActiveLargeAirports;
 
-  public TimeDistance determineTimeDistance(SearchRequest searchRequest) {
-    RestTemplate restTemplate = new RestTemplate();
-    TimeDistance timeDistance = null;
-    Destination destination = searchRequest.getResolvedDestination();
+  private double KmToM = 1000;
+  private TimeDistance distanceUpto20Km = new TimeDistance(20000, 0);
+  private TimeDistance distanceBetween20To50Km = new TimeDistance(50000, 0);
+  private TimeDistance distanceBetween50To70Km = new TimeDistance(70000, 0);
+  private TimeDistance distanceBetween70To100Km = new TimeDistance(100000, 0);
+  private TimeDistance distanceMoreThan100Km = new TimeDistance(100000, 0);
 
-    Map<String, String> myParameters = new HashMap<>();
-    myParameters.put("LATITUDE", destination.getLatitude().toString());
-    myParameters.put("LONGITUDE", destination.getLongitude().toString());
-    myParameters.put("API_KEY", API_KEY);
-
-    String apiResponse = restTemplate.getForObject(GOOGLE_PLACES_API, String.class, myParameters);
-    JsonObject jsonResponse = parse(apiResponse).asObject();
-    String responseStatus = jsonResponse.get("status").asString();
-
-    if ("OK".equals(responseStatus)) {
-      JsonObject firstResult = jsonResponse.get("results").asArray().get(0).asObject();
-      JsonObject location = firstResult.get("geometry").asObject().get("location").asObject();
-      String airportName = firstResult.get("name").asString();
-      LOGGER.info("airport {} located within 100 km of destination {}", airportName, destination);
-      return new TimeDistance(100 * 1000, 3 * 3600);
-    } else {
-      return new InfeasibleRoute();
-    }
+  @PostConstruct
+  public void init() {
+    allActiveLargeAirports = airportRepository.findAllActiveLargeAirports();
   }
 
+  @Override
   public TravelModeMatch determineFeasibility(SearchRequest request) {
-    return null;
+    Feasibility feasibility = INFEASIBLE;
+    TimeDistance timeDistance = distanceMoreThan100Km;
+    Destination d = request.getResolvedDestination();
+    GeoCoordinate destGeoCoordinate = new GeoCoordinate(d.getLatitude(), d.getLongitude());
+
+    List<Double> distances = findActiveAirportsWithin100Km(destGeoCoordinate);
+    LOGGER.debug("sorted Distances to destination {} is {} ", d.name(), distances);
+
+    if (airportsWithin(distances, 0d, 20d * KmToM)) {
+      feasibility = PREFERRED;
+      timeDistance = distanceUpto20Km;
+    } else if (airportsWithin(distances, 20d * KmToM, 50d * KmToM)) {
+      feasibility = PROBABLE;
+      timeDistance = distanceBetween20To50Km;
+    } else if (airportsWithin(distances, 50d * KmToM, 70d * KmToM)) {
+      feasibility = REASONABLE_STRETCH;
+      timeDistance = distanceBetween50To70Km;
+    } else if (airportsWithin(distances, 70d * KmToM, 100d * KmToM)) {
+      feasibility = DIFFICULT;
+      timeDistance = distanceBetween70To100Km;
+    }
+    return new TravelModeMatch(forTravelMode(), feasibility, timeDistance);
+  }
+
+  private boolean airportsWithin(List<Double> distances, Double lowerBound, Double upperBound) {
+    long count = distances
+        .stream()
+        .filter(d -> d >= lowerBound && d < upperBound)
+        .count();
+    return count > 0l;
+  }
+
+  List<Double> findActiveAirportsWithin100Km(GeoCoordinate geoCoordinate) {
+    List<Double> nearestAirports = allActiveLargeAirports
+        .stream()
+        .map(airport -> airport.distanceFrom(geoCoordinate))
+        .filter(distance -> distance <= 100d * 1000)
+        .sorted()
+        .collect(Collectors.toList());
+    return nearestAirports;
   }
 
   public TravelMode forTravelMode() {
     return AIR;
   }
+
 }
+

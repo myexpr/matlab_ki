@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ModifiedAirTest {
+public class AirTest {
 
   @Autowired
   DestinationRepository destinationRepository;
@@ -35,7 +35,7 @@ public class ModifiedAirTest {
   AirportRepository airportRepository;
 
   @Autowired
-  ModifiedAir airTravel;
+  Air airTravel;
 
   @Test
   public void findAtleast5AirportsCloseToWGCWhenFullyQualifiedDestinationIsKnown() {
