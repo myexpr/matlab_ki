@@ -18,30 +18,30 @@ import java.util.List;
 
 public enum OccupancyType {
 
-  BUSINESS_TRIP(adultCount(eq(1)),
-      roomCount(eq(1)),
-      nights(gtelte(1, 3)),
-      isWeekday()),
+  BUSINESS_TRIP(adultCount(eq(1), 20),
+      roomCount(eq(1), 20),
+      nights(gtelte(1, 3), 10),
+      isWeekday(50)),
   WEEKEND_GETAWAY_ADULTS(
-      adultCount(gtelte(1, 4)),
-      childrenCount(eq(0)),
-      roomCount(gtelte(1, 2)),
-      isWeekend()),
+      adultCount(gtelte(1, 4), 30),
+      childrenCount(eq(0), 10),
+      roomCount(gtelte(1, 2), 10),
+      isWeekend(50)),
   WEEKEND_GETAWAY_NUCLEAR_FAMILY(
-      adultCount(gtelte(1, 2)),
-      childrenCount(gtelte(1, 3)),
-      roomCount(gtelte(1, 2)),
-      isWeekend()),
+      adultCount(gtelte(1, 2), 30),
+      childrenCount(gtelte(1, 3), 30),
+      roomCount(gtelte(1, 2), 10),
+      isWeekend(30)),
   WEEKEND_GETAWAY_FAMILIES(
-      adultCount(gtelte(3, 4)),
-      childrenCount(gtelte(3, 5)),
-      roomCount(gtelte(2, 3)),
-      isWeekend()),
+      adultCount(gtelte(3, 4), 30),
+      childrenCount(gtelte(3, 5), 30),
+      roomCount(gtelte(2, 3), 10),
+      isWeekend(30)),
   VACATION_NUCLEAR_FAMILY(
-      adultCount(gtelte(1, 2)),
-      childrenCount(gtelte(1, 3)),
-      roomCount(gtelte(1, 2)),
-      nights(gtelte(3, 10)));
+      adultCount(gtelte(1, 2), 30),
+      childrenCount(gtelte(1, 3), 30),
+      roomCount(gtelte(1, 2), 10),
+      nights(gtelte(3, 10), 30));
 
   private final List<OccupancyConstraint> constraints;
 
@@ -61,10 +61,21 @@ public enum OccupancyType {
     return new OccupancyTypeMatch(this, probability);
   }
 
+  public OccupancyTypeMatch weightedEvaluation(SearchRequest stayFor9Days) {
+    int sumOfWeights = constraints
+        .stream()
+        .filter(c -> c.evaluate(stayFor9Days))
+        .mapToInt(OccupancyConstraint::constraintWeight)
+        .sum();
+
+    return new OccupancyTypeMatch(this, sumOfWeights);
+  }
+
   private long getCountOfPassConstraints(SearchRequest request) {
     return constraints
         .stream()
         .filter(c -> c.evaluate(request))
         .count();
   }
+
 }

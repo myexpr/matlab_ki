@@ -8,6 +8,14 @@ import java.time.DayOfWeek;
 
 public class OverWeekend extends OverWeekday {
 
+  public OverWeekend() {
+    super();
+  }
+
+  public OverWeekend(Integer weight) {
+    super(weight);
+  }
+
   @Override
   public boolean evaluate(SearchRequest request) {
     DayOfWeek startDay = determineDayOfWeek(request.getFromDate());

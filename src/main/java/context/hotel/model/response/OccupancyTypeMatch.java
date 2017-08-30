@@ -8,7 +8,7 @@ import context.hotel.model.Feasibility;
 import context.hotel.model.OccupancyType;
 import java.util.Objects;
 
-public class OccupancyTypeMatch implements ContextMatch {
+public class OccupancyTypeMatch implements ContextMatch, Comparable<OccupancyTypeMatch> {
 
   Integer matchPercentage;
   OccupancyType occupancyType;
@@ -79,5 +79,11 @@ public class OccupancyTypeMatch implements ContextMatch {
   @Override
   public Object getData() {
     return this.matchPercentage;
+  }
+
+  @Override
+  public int compareTo(OccupancyTypeMatch other) {
+    //intentional reverse sort
+    return other.matchPercentage.compareTo(this.matchPercentage);
   }
 }

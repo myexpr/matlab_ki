@@ -8,8 +8,18 @@ import context.hotel.model.SearchRequest;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.Optional;
 
 public class OverWeekday implements OccupancyConstraint {
+
+  private Integer weight;
+
+  public OverWeekday() {
+  }
+
+  public OverWeekday(Integer weight) {
+    this.weight = weight;
+  }
 
   @Override
   public boolean evaluate(SearchRequest request) {
@@ -18,6 +28,11 @@ public class OverWeekday implements OccupancyConstraint {
 
     return startDay.getValue() >= MONDAY.getValue() &&
         endDay.getValue() <= FRIDAY.getValue();
+  }
+
+  @Override
+  public Integer constraintWeight() {
+    return Optional.ofNullable(weight).get();
   }
 
   protected DayOfWeek determineDayOfWeek(LocalDate date) {

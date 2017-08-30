@@ -30,4 +30,28 @@ public class OccupancyConstraintFactory {
   public static OverWeekend isWeekend() {
     return new OverWeekend();
   }
+
+  public static NumberOfAdults adultCount(Constraint c, Integer weight) {
+    return new NumberOfAdults(c, weight);
+  }
+
+  public static NumberOfChildren childrenCount(Constraint c, Integer weight) {
+    return new NumberOfChildren(c, weight);
+  }
+
+  public static NumberOfRooms roomCount(Constraint c, Integer weight) {
+    return new NumberOfRooms(c, weight);
+  }
+
+  public static NumberOfNights nights(Constraint c, Integer weight) {
+    return new NumberOfNights(c, weight);
+  }
+
+  public static OverWeekday isWeekday(Integer weight) {
+    return new OverWeekday(weight);
+  }
+
+  public static OverWeekend isWeekend(Integer weight) {
+    return new OverWeekend(weight);
+  }
 }

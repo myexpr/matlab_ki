@@ -21,8 +21,7 @@ public class OccupancyTypeContextSource implements ContextSource {
     return matchedType;
   }
 
-
-  public List<OccupancyTypeMatch> deriveContext(SearchRequest request) {
+  public List<OccupancyTypeMatch> deriveProbabilisticContext(SearchRequest request) {
     List<OccupancyTypeMatch> occpancyTypeMatches = asList(OccupancyType.values())
         .stream()
         .map(t -> t.probabilisticEvaluation(request))
@@ -30,4 +29,16 @@ public class OccupancyTypeContextSource implements ContextSource {
         .collect(toList());
     return occpancyTypeMatches;
   }
+
+  public List<OccupancyTypeMatch> deriveContext(SearchRequest request) {
+    List<OccupancyTypeMatch> occpancyTypeMatches =
+        asList(OccupancyType.values())
+            .stream()
+            .map(t -> t.weightedEvaluation(request))
+            .filter(p -> p.getMatchPercentage() > 70)
+            .sorted()
+            .collect(toList());
+    return occpancyTypeMatches;
+  }
+
 }

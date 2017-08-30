@@ -8,5 +8,5 @@ import context.hotel.model.SearchRequest;
 public interface OccupancyConstraint {
 
   public boolean evaluate(SearchRequest request);
-
+  public Integer constraintWeight();
 }

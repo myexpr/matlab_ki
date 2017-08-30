@@ -65,7 +65,7 @@ public class OccupancyTypeContextSourceTest {
         new OccupancyTypeMatch(WEEKEND_GETAWAY_ADULTS, 75),
         new OccupancyTypeMatch(WEEKEND_GETAWAY_NUCLEAR_FAMILY, 100),
         new OccupancyTypeMatch(VACATION_NUCLEAR_FAMILY, 75));
-    assertEquals(occupancyTypeMatches, engine.deriveContext(request));
+    assertEquals(occupancyTypeMatches, engine.deriveProbabilisticContext(request));
   }
 
 
