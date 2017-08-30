@@ -50,7 +50,7 @@ public class ModifiedAirTest {
     assertTrue(largeAirportsNearby.size() == 5);
     assertTrue(largeAirportsNearby.get(0) < 15000d);
 
-    assertEquals(PREFERRED, airTravel.determineFeasibility(null, searchRequest));
+    assertEquals(PREFERRED, airTravel.determineFeasibility(searchRequest));
   }
 
   @Test

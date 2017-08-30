@@ -15,6 +15,7 @@ import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
 import context.hotel.model.User;
+import context.hotel.model.response.TravelModeMatch;
 import org.junit.Test;
 
 /**
@@ -33,14 +34,14 @@ public class RoadContextFragmentTest {
   public void returnInfeasibleWhenInfeasibleRoute() {
     TimeDistance td = new InfeasibleRoute();
     SearchRequest searchRequest = A_SEARCH_WITH_2_CHILDREN;
-    assertEquals(INFEASIBLE, new Road().determineFeasibility(td, searchRequest));
+    assertEquals(INFEASIBLE, new Road().determineFeasibility(searchRequest));
   }
 
   @Test
   public void returnPreferredWhenDistanceLessThan500() {
     TimeDistance td = new TimeDistance(430 * mpkm, 7200);
     SearchRequest searchRequest = null;
-    assertEquals(PREFERRED, new Road().determineFeasibility(td, searchRequest));
+    assertEquals(PREFERRED, new Road().determineFeasibility(searchRequest));
   }
 
   @Test
@@ -48,28 +49,28 @@ public class RoadContextFragmentTest {
     TimeDistance td = new TimeDistance(600 * mpkm, 14400);
     SearchRequest searchRequest = A_SEARCH_WITH_NO_CHILDREN;
     assertEquals(REASONABLE_STRETCH,
-        new Road().determineFeasibility(td, searchRequest));
+        new Road().determineFeasibility(searchRequest));
   }
 
   @Test
   public void returnStretchForDistanceBetween500_800_withChildren() {
     TimeDistance td = new TimeDistance(600 * mpkm, 14400);
     SearchRequest searchRequest = A_SEARCH_WITH_2_CHILDREN;
-    assertEquals(DIFFICULT, new Road().determineFeasibility(td, searchRequest));
+    assertEquals(DIFFICULT, new Road().determineFeasibility(searchRequest));
   }
 
   @Test
   public void distancesGreaterThan800_WithNoChildren_AreDifficult() {
     TimeDistance td = new TimeDistance(1200 * mpkm, 1456400);
     SearchRequest searchRequest = A_SEARCH_WITH_NO_CHILDREN;
-    assertEquals(DIFFICULT, new Road().determineFeasibility(td, searchRequest));
+    assertEquals(DIFFICULT, new Road().determineFeasibility(searchRequest));
   }
 
   @Test
   public void distancesGreaterThan800_WithChildren_IsInfeasible() {
     TimeDistance td = new TimeDistance(1200 * mpkm, 1456400);
     SearchRequest searchRequest = A_SEARCH_WITH_2_CHILDREN;
-    assertEquals(INFEASIBLE, new Road().determineFeasibility(td, searchRequest));
+    assertEquals(INFEASIBLE, new Road().determineFeasibility(searchRequest));
   }
 
   @Test
@@ -80,10 +81,10 @@ public class RoadContextFragmentTest {
     searchRequest.setResolvedDestination(destination);
 
     Travel service = new Road();
-    TimeDistance td = service.determineTimeDistance(searchRequest);
+    TravelModeMatch td = service.determineFeasibility(searchRequest);
     System.out.println(">>>>>" + td);
-    assertTrue(td.getDistance() > 5000);
-    assertTrue(td.getTime() > 7200);
+    assertTrue(td.getTimeDistance().getDistance() > 5000);
+    assertTrue(td.getTimeDistance().getTime() > 7200);
   }
 
   @Test
@@ -94,9 +95,9 @@ public class RoadContextFragmentTest {
     searchRequest.setResolvedDestination(destination);
 
     Travel service = new Road();
-    TimeDistance td = service.determineTimeDistance(searchRequest);
+    TravelModeMatch td = service.determineFeasibility(searchRequest);
 
-    assertEquals(td.getClass(), InfeasibleRoute.class);
+    assertEquals(td.getTimeDistance().getClass(), InfeasibleRoute.class);
   }
 
   @Test
@@ -108,9 +109,9 @@ public class RoadContextFragmentTest {
     searchRequest.setResolvedDestination(destination);
 
     Travel service = new Road();
-    TimeDistance td = service.determineTimeDistance(searchRequest);
+    TravelModeMatch td = service.determineFeasibility(searchRequest);
 
-    assertEquals(td.getClass(), InfeasibleRoute.class);
+    assertEquals(td.getTimeDistance().getClass(), InfeasibleRoute.class);
   }
 
 

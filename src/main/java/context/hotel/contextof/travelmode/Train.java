@@ -4,12 +4,14 @@ import static context.hotel.model.Feasibility.DIFFICULT;
 import static context.hotel.model.Feasibility.INFEASIBLE;
 import static context.hotel.model.Feasibility.PREFERRED;
 import static context.hotel.model.Feasibility.REASONABLE_STRETCH;
+import static context.hotel.model.TravelMode.RAIL;
 
 import context.hotel.model.Feasibility;
 import context.hotel.model.InfeasibleRoute;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
 import context.hotel.model.TravelMode;
+import context.hotel.model.response.TravelModeMatch;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,31 +21,28 @@ import org.springframework.stereotype.Component;
 public class Train extends AbstractRoadRail {
 
   @Override
-  public Feasibility determineFeasibility(TimeDistance timeDistance, SearchRequest request) {
-    Feasibility result = INFEASIBLE;
+  public TravelModeMatch determineFeasibility(SearchRequest request) {
+    TravelModeMatch result = null;
+    Feasibility feasibility = INFEASIBLE;
+    TimeDistance timeDistance = super.determineTimeDistance(request);
     int secondsPerHour = 3600;
     if (timeDistance instanceof InfeasibleRoute) {
-      return INFEASIBLE;
-    }
-    if (timeDistance.getTime() < 2 * secondsPerHour) {
-      return DIFFICULT;
-    }
-    if (timeDistance.getTime() >= 2 * secondsPerHour
+      feasibility = INFEASIBLE;
+    } else if (timeDistance.getTime() < 2 * secondsPerHour) {
+      feasibility = DIFFICULT;
+    } else if (timeDistance.getTime() >= 2 * secondsPerHour
         && timeDistance.getTime() < 4 * secondsPerHour) {
-      return PREFERRED;
-    }
-    if (timeDistance.getTime() >= 4 * secondsPerHour
+      feasibility = PREFERRED;
+    } else if (timeDistance.getTime() >= 4 * secondsPerHour
         && timeDistance.getTime() < 7 * secondsPerHour) {
-      return REASONABLE_STRETCH;
+      feasibility = REASONABLE_STRETCH;
+    } else if (timeDistance.getTime() > 7 * secondsPerHour) {
+      feasibility = request.partyWithChildren() ? INFEASIBLE : DIFFICULT;
     }
-    if (timeDistance.getTime() > 7 * secondsPerHour) {
-      return request.partyWithChildren() ? INFEASIBLE : DIFFICULT;
-    }
-    return result;
+    return new TravelModeMatch(forTravelMode(), feasibility, timeDistance);
   }
 
-  @Override
   public TravelMode forTravelMode() {
-    return TravelMode.RAIL;
+    return RAIL;
   }
 }

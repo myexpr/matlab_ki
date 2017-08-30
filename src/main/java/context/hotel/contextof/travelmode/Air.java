@@ -1,40 +1,33 @@
 package context.hotel.contextof.travelmode;
 
 import static com.eclipsesource.json.Json.parse;
-import static context.hotel.model.Feasibility.INFEASIBLE;
-import static context.hotel.model.Feasibility.REASONABLE_STRETCH;
 import static context.hotel.model.TravelMode.AIR;
 
 import com.eclipsesource.json.JsonObject;
 import context.hotel.model.Destination;
-import context.hotel.model.Feasibility;
 import context.hotel.model.InfeasibleRoute;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
 import context.hotel.model.TravelMode;
+import context.hotel.model.response.TravelModeMatch;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by araman on 19/08/2017.
  */
-@Component
-public class Air implements Travel {
+public class Air {
 
   private static final String GOOGLE_PLACES_API =
       "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={LATITUDE},{LONGITUDE}&radius=100000&type=airport&key={API_KEY}";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Air.class);
 
-  @Value("${secret.google}")
   private String API_KEY;
 
-  @Override
   public TimeDistance determineTimeDistance(SearchRequest searchRequest) {
     RestTemplate restTemplate = new RestTemplate();
     TimeDistance timeDistance = null;
@@ -60,12 +53,10 @@ public class Air implements Travel {
     }
   }
 
-  @Override
-  public Feasibility determineFeasibility(TimeDistance timeDistance, SearchRequest request) {
-    return timeDistance instanceof InfeasibleRoute ? INFEASIBLE : REASONABLE_STRETCH;
+  public TravelModeMatch determineFeasibility(SearchRequest request) {
+    return null;
   }
 
-  @Override
   public TravelMode forTravelMode() {
     return AIR;
   }

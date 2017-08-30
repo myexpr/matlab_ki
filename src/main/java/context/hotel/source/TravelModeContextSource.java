@@ -1,10 +1,7 @@
 package context.hotel.source;
 
 import context.hotel.contextof.travelmode.Travel;
-import context.hotel.model.Feasibility;
 import context.hotel.model.SearchRequest;
-import context.hotel.model.TimeDistance;
-import context.hotel.model.TravelMode;
 import context.hotel.model.response.TravelModeMatch;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +21,7 @@ public class TravelModeContextSource implements ContextSource {
 
     List<TravelModeMatch> results = travels
         .stream()
-        .map(svc -> {
-          TimeDistance timeDistance = svc.determineTimeDistance(request);
-          Feasibility feasibility = svc.determineFeasibility(timeDistance, request);
-          TravelMode travelMode = svc.forTravelMode();
-          return new TravelModeMatch(travelMode, feasibility, timeDistance);
-        })
+        .map(svc -> svc.determineFeasibility(request))
         .collect(Collectors.toList());
     return results;
   }

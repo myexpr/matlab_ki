@@ -2,11 +2,13 @@ package context.hotel.contextof.occupancy;
 
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.MONDAY;
+import static java.time.LocalDate.parse;
 import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import context.hotel.model.NullSafeUser;
 import context.hotel.model.Room;
 import context.hotel.model.SearchRequest;
 import java.time.DayOfWeek;
@@ -39,6 +41,16 @@ public class OverWeekdayTest {
     System.out.println(NOT_A_WEEKDAY_REQUEST);
     assertFalse(weekdayConstraint.evaluate(NOT_A_WEEKDAY_REQUEST));
   }
+
+  @Test
+  public void requestIsNeitherOverWeekdayOrOverWeekEnd() {
+    OverWeekday weekdayConstraint = new OverWeekday();
+    SearchRequest aRequestOverLappingWeekend = new SearchRequest("FOO", parse("2017-08-30"), parse("2017-09-04"), new Room(2,0), new NullSafeUser());
+    SearchRequest aRequestNotOverLappingWeekend = new SearchRequest("FOO", parse("2017-08-30"), parse("2017-09-01"), new Room(2,0), new NullSafeUser());
+    assertFalse(weekdayConstraint.evaluate(aRequestOverLappingWeekend));
+    assertTrue(weekdayConstraint.evaluate(aRequestNotOverLappingWeekend));
+  }
+
 
   private static LocalDate nextMonthsFirst(DayOfWeek dayOfWeek) {
     return LocalDate.now().with(firstDayOfNextMonth()).with(firstInMonth(dayOfWeek));

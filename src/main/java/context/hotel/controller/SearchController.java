@@ -54,6 +54,7 @@ public class SearchController {
   }
 
   @RequestMapping(path = "/type", method = RequestMethod.GET)
+  @CrossOrigin
   public List<Destination> findCities(@RequestParam String q) {
     List<Destination> destinations = destinationRepository.findTop10ByCityStartingWithIgnoreCaseOrderByCityAsc(q);
 

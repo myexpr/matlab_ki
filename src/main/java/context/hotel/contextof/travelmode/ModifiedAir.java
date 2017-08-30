@@ -1,5 +1,10 @@
 package context.hotel.contextof.travelmode;
 
+import static context.hotel.model.Feasibility.DIFFICULT;
+import static context.hotel.model.Feasibility.INFEASIBLE;
+import static context.hotel.model.Feasibility.PREFERRED;
+import static context.hotel.model.Feasibility.PROBABLE;
+import static context.hotel.model.Feasibility.REASONABLE_STRETCH;
 import static context.hotel.model.TravelMode.AIR;
 
 import context.hotel.model.Airport;
@@ -9,6 +14,7 @@ import context.hotel.model.GeoCoordinate;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
 import context.hotel.model.TravelMode;
+import context.hotel.model.response.TravelModeMatch;
 import context.hotel.repository.AirportRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +35,13 @@ public class ModifiedAir implements Travel {
   @Autowired
   AirportRepository airportRepository;
   List<Airport> allActiveLargeAirports;
+
   private double KmToM = 1000;
+  private TimeDistance distanceUpto20Km = new TimeDistance(20000, 0);
+  private TimeDistance distanceBetween20To50Km = new TimeDistance(50000, 0);
+  private TimeDistance distanceBetween50To70Km = new TimeDistance(70000, 0);
+  private TimeDistance distanceBetween70To100Km = new TimeDistance(100000, 0);
+  private TimeDistance distanceMoreThan100Km = new TimeDistance(100000, 0);
 
   @PostConstruct
   public void init() {
@@ -37,34 +49,32 @@ public class ModifiedAir implements Travel {
   }
 
   @Override
-  public TimeDistance determineTimeDistance(SearchRequest request) {
-    LOGGER.debug("determineTimeDistance invocation ignored");
-    return null;
-  }
-
-  @Override
-  public Feasibility determineFeasibility(TimeDistance timeDistance, SearchRequest request) {
-    Feasibility result = Feasibility.INFEASIBLE;
+  public TravelModeMatch determineFeasibility(SearchRequest request) {
+    Feasibility feasibility = INFEASIBLE;
+    TimeDistance timeDistance = distanceMoreThan100Km;
     Destination d = request.getResolvedDestination();
     GeoCoordinate destGeoCoordinate = new GeoCoordinate(d.getLatitude(), d.getLongitude());
-    List<Double> distances = findActiveAirportsWithin100Km(destGeoCoordinate);
 
+    List<Double> distances = findActiveAirportsWithin100Km(destGeoCoordinate);
     LOGGER.debug("sorted Distances to destination {} is {} ", d.name(), distances);
 
     if (airportsWithin(distances, 0d, 20d * KmToM)) {
-      result = Feasibility.PREFERRED;
+      feasibility = PREFERRED;
+      timeDistance = distanceUpto20Km;
     } else if (airportsWithin(distances, 20d * KmToM, 50d * KmToM)) {
-      result = Feasibility.PROBABLE;
+      feasibility = PROBABLE;
+      timeDistance = distanceBetween20To50Km;
     } else if (airportsWithin(distances, 50d * KmToM, 70d * KmToM)) {
-      result = Feasibility.REASONABLE_STRETCH;
+      feasibility = REASONABLE_STRETCH;
+      timeDistance = distanceBetween50To70Km;
     } else if (airportsWithin(distances, 70d * KmToM, 100d * KmToM)) {
-      result = Feasibility.DIFFICULT;
+      feasibility = DIFFICULT;
+      timeDistance = distanceBetween70To100Km;
     }
-    return result;
+    return new TravelModeMatch(forTravelMode(), feasibility, timeDistance);
   }
 
-  private boolean airportsWithin(List<Double> distances, Double lowerBound,
-      Double upperBound) {
+  private boolean airportsWithin(List<Double> distances, Double lowerBound, Double upperBound) {
     long count = distances
         .stream()
         .filter(d -> d >= lowerBound && d < upperBound)
@@ -82,7 +92,6 @@ public class ModifiedAir implements Travel {
     return nearestAirports;
   }
 
-  @Override
   public TravelMode forTravelMode() {
     return AIR;
   }

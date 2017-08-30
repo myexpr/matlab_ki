@@ -6,6 +6,7 @@ import com.eclipsesource.json.JsonObject;
 import context.hotel.model.InfeasibleRoute;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
+import context.hotel.model.TravelMode;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -58,4 +59,5 @@ public abstract class AbstractRoadRail implements Travel {
 
     return timeDistance;
   }
+
 }
