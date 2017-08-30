@@ -35,7 +35,7 @@ public class OccupancyTypeContextSource implements ContextSource {
         asList(OccupancyType.values())
             .stream()
             .map(t -> t.weightedEvaluation(request))
-            .filter(p -> p.getMatchPercentage() > 70)
+            .filter(p -> p.getMatchPercentage() != 0)
             .sorted()
             .collect(toList());
     return occpancyTypeMatches;

@@ -1,7 +1,7 @@
 package context.hotel.controller;
 
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toList;
 
 import context.hotel.contextof.user.FacebookIdentity;
 import context.hotel.engine.ContextEngine;
@@ -9,6 +9,7 @@ import context.hotel.model.Destination;
 import context.hotel.model.LoggedUser;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.response.ContextMatch;
+import context.hotel.model.response.IdValue;
 import context.hotel.repository.DestinationRepository;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +56,16 @@ public class SearchController {
 
   @RequestMapping(path = "/type", method = RequestMethod.GET)
   @CrossOrigin
-  public List<Destination> findCities(@RequestParam String q) {
-    List<Destination> destinations = destinationRepository.findTop10ByCityStartingWithIgnoreCaseOrderByCityAsc(q);
+  public List<IdValue> findCities(@RequestParam String q) {
+    List<Destination> destinations = destinationRepository.findTop15ByCityStartingWithIgnoreCaseOrderByCityAsc(q);
 
-    Map<String, String> mappedDestinations = destinations.stream().collect(
-        toMap(Destination::getDestinationId, Destination::name));
+    List<IdValue> typeAheadEnteries = destinations
+        .stream()
+        .map(d -> new IdValue(d.getDestinationId(), d.name()))
+        .sorted()
+        .collect(toList());
 
-    return destinations;
+    return typeAheadEnteries;
   }
 
 }
