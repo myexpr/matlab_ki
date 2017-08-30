@@ -1,6 +1,6 @@
 package context.hotel.model;
 
-import java.util.Collections;
+import static java.util.Collections.emptyList;
 
 /**
  * Created by araman on 28/08/2017.
@@ -8,7 +8,7 @@ import java.util.Collections;
 public class NullSafeLoggedUser extends LoggedUser {
 
   public NullSafeLoggedUser() {
-    super("", "", "", Collections.emptyList());
+    super("", "", "", emptyList());
   }
 
   @Override

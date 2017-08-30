@@ -6,11 +6,11 @@ import com.eclipsesource.json.JsonObject;
 import context.hotel.model.InfeasibleRoute;
 import context.hotel.model.SearchRequest;
 import context.hotel.model.TimeDistance;
-import context.hotel.model.TravelMode;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -20,6 +20,9 @@ public abstract class AbstractRoadRail implements Travel {
 
   private static final String API_END_POINT = "https://maps.googleapis.com/maps/api/directions/json?origin={ORIGIN}&destination={DESTINATION}&key={API_KEY}&mode={MODE}";
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRoadRail.class);
+
+  @Value("${secret.google}")
+  private String apiKey;
 
   public TimeDistance determineTimeDistance(SearchRequest searchRequest) {
     RestTemplate restTemplate = new RestTemplate();
@@ -37,7 +40,7 @@ public abstract class AbstractRoadRail implements Travel {
     Map<String, String> myParameters = new HashMap<>();
     myParameters.put("ORIGIN", origin);
     myParameters.put("DESTINATION", destination);
-    myParameters.put("API_KEY", ""); //works without one.
+    myParameters.put("API_KEY", apiKey);
     myParameters.put("MODE", apiTransitMode);
 
     String apiResponse = restTemplate.getForObject(API_END_POINT, String.class, myParameters);
