@@ -62,8 +62,9 @@ public enum OccupancyType {
   }
 
   private long getCountOfPassConstraints(SearchRequest request) {
-    return constraints.stream().filter(c -> {
-      return c.evaluate(request);
-    }).count();
+    return constraints
+        .stream()
+        .filter(c -> c.evaluate(request))
+        .count();
   }
 }

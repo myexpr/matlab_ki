@@ -16,9 +16,7 @@ public class OccupancyTypeContextSource implements ContextSource {
     OccupancyType matchedType = null;
     matchedType = asList(OccupancyType.values())
         .stream()
-        .filter(t -> {
-          return t.evaluate(request);
-        })
+        .filter(t -> t.evaluate(request))
         .findFirst().get();
     return matchedType;
   }
@@ -27,12 +25,8 @@ public class OccupancyTypeContextSource implements ContextSource {
   public List<OccupancyTypeMatch> deriveContext(SearchRequest request) {
     List<OccupancyTypeMatch> occpancyTypeMatches = asList(OccupancyType.values())
         .stream()
-        .map(t -> {
-          return t.probabilisticEvaluation(request);
-        })
-        .filter(p -> {
-          return p.getMatchPercentage() > 70;
-        })
+        .map(t -> t.probabilisticEvaluation(request))
+        .filter(p -> p.getMatchPercentage() > 70)
         .collect(toList());
     return occpancyTypeMatches;
   }
