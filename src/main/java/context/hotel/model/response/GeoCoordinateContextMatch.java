@@ -25,7 +25,7 @@ public class GeoCoordinateContextMatch implements ContextMatch {
 
   @Override
   public String getContextCategory() {
-    return "GeoCoordinate";
+    return "GeoCoordinateContext";
   }
 
   @Override
